@@ -31,7 +31,7 @@ from .views import (
     IBlocksTestAPIView
 )
 
-# http://127.0.0.1:8000/api/
+# http://127.0.0.1:8000/api/ через докер http://0.0.0.0:9000/api/
 urlpatterns = [
     path('program/', ProgramTestAPIView.as_view(), name='program'),
     # Сервис old
