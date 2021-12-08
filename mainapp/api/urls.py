@@ -20,7 +20,7 @@ from .views import (
     UserServiceSMSTestAPIView,
     UserServiceTokenTestAPIView,
     # UserServiceCandidateTestAPIView,
-    # EmployeeTestAPIView,
+    EmployeeTestAPIView,
     IEmployeeServiceAuthenticationTestAPIView,
     RequestUserToken,
     IAdaptationProgramTestAPIView,
@@ -57,7 +57,7 @@ urlpatterns = [
     path('userservice/token/', UserServiceTokenTestAPIView.as_view(), name='user service(token)'),
     # path('userservice/candidate/', UserServiceCandidateTestAPIView.as_view(), name='candidate'),
     # IEmployeeService
-    # path('employee/', EmployeeTestAPIView.as_view(), name='candidate'),
+    path('employee/', EmployeeTestAPIView.as_view(), name='candidate'),
 
     #     Сервисы для мобильного
     path('iemployeeserviceauthentification/', IEmployeeServiceAuthenticationTestAPIView.as_view(),

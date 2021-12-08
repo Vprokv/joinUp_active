@@ -370,10 +370,42 @@ class UserServiceTokenTestAPIView(APIView):
 # Нет данных
 
 
-# class EmployeeTestAPIView(APIView):
+class EmployeeTestAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        data = [
+            {
+                "id_employee": 1,
+                "id_user_employee": 2,
+                "id_customer": 2,
+                "last_name": "Иванов",
+                "first_name": "Иван",
+                "middle_name": "Иванович",
+                "post": "менеджер по продажам",
+                "mobile_phone": "79995496281",
+                "email": "asass@mail.ru",
+                "status": 2,
+                "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
+                "create_user": 2,
+            },
+            {
+                "id_employee": 3,
+                "id_user_employee": 2,
+                "id_customer": 2,
+                "last_name": "Иванов2",
+                "first_name": "Иван2",
+                "middle_name": "Иванович2",
+                "post": "менеджер по продажам",
+                "mobile_phone": "79995496281",
+                "email": "asass@mail.ru",
+                "status": 2,
+                "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
+                "create_user": 2,
+            },
+        ]
+        return Response(data)
 
-
-# Нет данных
+    def post(self, request, *args, **kwargs):
+        return Response({"id_employee": 3}, status=status.HTTP_200_OK)
 
 
 class IEmployeeServiceAuthenticationTestAPIView(APIView):
