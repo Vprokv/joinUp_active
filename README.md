@@ -1,3 +1,7 @@
+install  packets django-cors-headers
+pip3 install django-cors-headers
+
+
 command start project 
 1. for docker: docker-compose up
 2. for python: python3 manage.py runserver
