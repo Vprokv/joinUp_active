@@ -71,17 +71,63 @@ class AdaptationLevelTestAPIView(APIView):
                 "status": 2,
                 "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
                 "create_user": 2,
-                "id_program": [1, 2]
+                "stages": [
+                    {
+                        "id_stage": 1,
+                        "stage_name": "stage 1",
+                        "illustration_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fru.depositphotos.com%2Fstock-photos%2F%25D1%2580%25D0%25B0%25D0%25B1%25D0%25BE%25D1%2582%25D0%25B0-%25D0%25B2-%25D0%25B8%25D0%25BD%25D1%2582%25D0%25B5%25D1%2580%25D0%25BD%25D0%25B5%25D1%2582%25D0%25B5.html&psig=AOvVaw0MVUI_amjMnc32xcy1SKU2&ust=1638170544123000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPi34PzCuvQCFQAAAAAdAAAAABAD",
+                        "tier": 12,
+                        "point": 34,
+                        "status": 2,
+                        "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
+                        "create_user": 2,
+                        "id_level": [1, 2]
+                    },
+                    {
+                        "id_stage": 2,
+                        "stage_name": "stage 2",
+                        "illustration_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fru.depositphotos.com%2Fstock-photos%2F%25D1%2580%25D0%25B0%25D0%25B1%25D0%25BE%25D1%2582%25D0%25B0-%25D0%25B2-%25D0%25B8%25D0%25BD%25D1%2582%25D0%25B5%25D1%2580%25D0%25BD%25D0%25B5%25D1%2582%25D0%25B5.html&psig=AOvVaw0MVUI_amjMnc32xcy1SKU2&ust=1638170544123000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPi34PzCuvQCFQAAAAAdAAAAABAD",
+                        "tier": 12,
+                        "point": 34,
+                        "status": 2,
+                        "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
+                        "create_user": 2,
+                        "id_level": [3, 4]
+                    }
+                ]
             },
             {
                 "id_level": 2,
-                "level_name": "Должностные инструкции",
+                "level_name": "и",
                 "illustration": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fru.depositphotos.com%2Fstock-photos%2F%25D1%2580%25D0%25B0%25D0%25B1%25D0%25BE%25D1%2582%25D0%25B0-%25D0%25B2-%25D0%25B8%25D0%25BD%25D1%2582%25D0%25B5%25D1%2580%25D0%25BD%25D0%25B5%25D1%2582%25D0%25B5.html&psig=AOvVaw0MVUI_amjMnc32xcy1SKU2&ust=1638170544123000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPi34PzCuvQCFQAAAAAdAAAAABAD",
                 "tier": 12,
                 "status": 4,
                 "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
                 "create_user": 12,
-                "id_program": [3, 7]
+                "stages": [
+                    {
+                        "id_stage": 3,
+                        "stage_name": "stage 3",
+                        "illustration_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fru.depositphotos.com%2Fstock-photos%2F%25D1%2580%25D0%25B0%25D0%25B1%25D0%25BE%25D1%2582%25D0%25B0-%25D0%25B2-%25D0%25B8%25D0%25BD%25D1%2582%25D0%25B5%25D1%2580%25D0%25BD%25D0%25B5%25D1%2582%25D0%25B5.html&psig=AOvVaw0MVUI_amjMnc32xcy1SKU2&ust=1638170544123000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPi34PzCuvQCFQAAAAAdAAAAABAD",
+                        "tier": 12,
+                        "point": 34,
+                        "status": 2,
+                        "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
+                        "create_user": 2,
+                        "id_level": [1, 2]
+                    },
+                    {
+                        "id_stage": 4,
+                        "stage_name": "stage 4",
+                        "illustration_link": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fru.depositphotos.com%2Fstock-photos%2F%25D1%2580%25D0%25B0%25D0%25B1%25D0%25BE%25D1%2582%25D0%25B0-%25D0%25B2-%25D0%25B8%25D0%25BD%25D1%2582%25D0%25B5%25D1%2580%25D0%25BD%25D0%25B5%25D1%2582%25D0%25B5.html&psig=AOvVaw0MVUI_amjMnc32xcy1SKU2&ust=1638170544123000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPi34PzCuvQCFQAAAAAdAAAAABAD",
+                        "tier": 12,
+                        "point": 34,
+                        "status": 2,
+                        "create_date": "Sun, 31 Dec 1899 00:00:00 GMT",
+                        "create_user": 2,
+                        "id_level": [3, 4]
+                    }
+                ]
             }
         ]
         return Response(data)

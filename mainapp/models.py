@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-
+# TODO: Crete index for adaptation stage table on  levelId.
 class Program(models.Model):
     program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
     description = models.CharField(max_length=256, verbose_name="Cодержание программы")
