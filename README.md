@@ -1,4 +1,5 @@
 install  packets django-cors-headers
+
 pip3 install django-cors-headers
 
 
