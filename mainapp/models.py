@@ -3,125 +3,6 @@ from django.db import models
 
 # Create your models here.
 # TODO: Crete index for adaptation stage table on  levelId.
-class Program(models.Model):
-    program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
-    description = models.CharField(max_length=256, verbose_name="Cодержание программы")
-    duration_day = models.IntegerField(verbose_name="Длительность адаптации")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    id_customer = models.IntegerField(verbose_name="Заказчик")
-    status = models.IntegerField(verbose_name="Статус программы")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Level(models.Model):
-    level_name = models.CharField(max_length=128, verbose_name="Наименование уровня")
-    illustration = models.ImageField(verbose_name="Иллюстрация")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус уровня")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class AdaptationStage(models.Model):
-    stage_name = models.CharField(max_length=128, verbose_name="Наименование этапа")
-    illustration = models.ImageField(verbose_name="Ссылка на иллюстрацию")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    point = models.IntegerField(verbose_name="Количество баллов")
-    status = models.IntegerField(verbose_name="Статус этапа")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Block(models.Model):
-    block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
-    description = models.CharField(max_length=256, verbose_name="Cодержание блока")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    id_stage = models.IntegerField(verbose_name="Количество баллов")
-    status = models.IntegerField(verbose_name="Статус блока")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Goal(models.Model):
-    goal_name = models.CharField(max_length=128, verbose_name="Наименование цели")
-    description = models.CharField(max_length=256, verbose_name="Cодержание цели")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус цели")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Document(models.Model):
-    document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
-    document_link = models.URLField(verbose_name="Ccсылка на файл")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус цели")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Contact(models.Model):
-    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
-    first_name = models.CharField(max_length=64, verbose_name="Имя")
-    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
-    post = models.CharField(max_length=64, verbose_name="Должность")
-    role = models.CharField(max_length=64, verbose_name="Роль")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус контакта")
-    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Customer(models.Model):
-    customer_name = models.CharField(max_length=64, verbose_name="Наименование заказчика")
-    city = models.CharField(max_length=64, verbose_name="Город")
-    address = models.CharField(max_length=128, verbose_name="Адрес")
-    status = models.IntegerField(verbose_name="Статус документа")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class License(models.Model):
-    id_license_pack = models.IntegerField(verbose_name="Ссфлка пакет лицезий")
-    id_candidate = models.IntegerField(verbose_name="ссылка на кандидата")
-    start_date = models.DateField(verbose_name="Дата старта лицензии")
-    finish_date = models.DateField(verbose_name="Дата окончания лицензии")
-    status = models.IntegerField(verbose_name="Статус лицензии")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class UserCandidate(models.Model):
-    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class UserEmployee(models.Model):
-    user_name = models.CharField(verbose_name="Логин / телефон (mobile phone)")
-    password = models.CharField(verbose_name="Пароль")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
-class Candidate(models.Model):
-    id_user_candidate = models.IntegerField(verbose_name="id пользователя")
-    id_customer = models.IntegerField(verbose_name="id заказчика")
-    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
-    first_name = models.CharField(max_length=64, verbose_name="Имя")
-    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
-    post = models.CharField(max_length=64, verbose_name="Должность")
-    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
-    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-
 class Employee(models.Model):
     id_user_employee = models.IntegerField(verbose_name="id пользователя")
     id_customer = models.IntegerField(verbose_name="id заказчика")
@@ -136,6 +17,160 @@ class Employee(models.Model):
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
 
+class Program(models.Model):
+    program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
+    description = models.CharField(max_length=256, verbose_name="Cодержание программы")
+    duration_day = models.IntegerField(verbose_name="Длительность адаптации")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    id_customer = models.IntegerField(verbose_name="Заказчик")
+    status = models.IntegerField(verbose_name="Статус программы")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.program_name
+
+
+class Level(models.Model):
+    level_name = models.CharField(max_length=128, verbose_name="Наименование уровня")
+    illustration = models.ImageField(verbose_name="Иллюстрация")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    status = models.IntegerField(verbose_name="Статус уровня")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.level_name
+
+
+class AdaptationStage(models.Model):
+    stage_name = models.CharField(max_length=128, verbose_name="Наименование этапа")
+    illustration = models.ImageField(verbose_name="Ссылка на иллюстрацию")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    point = models.IntegerField(verbose_name="Количество баллов")
+    status = models.IntegerField(verbose_name="Статус этапа")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.stage_name
+
+
+class Block(models.Model):
+    block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
+    description = models.CharField(max_length=256, verbose_name="Cодержание блока")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    id_stage = models.IntegerField(verbose_name="Количество баллов")
+    status = models.IntegerField(verbose_name="Статус блока")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.block_name
+
+
+class Goal(models.Model):
+    goal_name = models.CharField(max_length=128, verbose_name="Наименование цели")
+    description = models.CharField(max_length=256, verbose_name="Cодержание цели")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    status = models.IntegerField(verbose_name="Статус цели")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.goal_name
+
+
+class Document(models.Model):
+    document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
+    document_link = models.URLField(verbose_name="Ccсылка на файл")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    status = models.IntegerField(verbose_name="Статус цели")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.document_name
+
+
+class Contact(models.Model):
+    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
+    first_name = models.CharField(max_length=64, verbose_name="Имя")
+    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
+    post = models.CharField(max_length=64, verbose_name="Должность")
+    role = models.CharField(max_length=64, verbose_name="Роль")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    status = models.IntegerField(verbose_name="Статус контакта")
+    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Customer(models.Model):
+    customer_name = models.CharField(max_length=64, verbose_name="Наименование заказчика")
+    city = models.CharField(max_length=64, verbose_name="Город")
+    address = models.CharField(max_length=128, verbose_name="Адрес")
+    status = models.IntegerField(verbose_name="Статус документа")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.customer_name)
+
+
+class License(models.Model):
+    id_license_pack = models.IntegerField(verbose_name="Ссфлка пакет лицезий")
+    id_candidate = models.IntegerField(verbose_name="ссылка на кандидата")
+    start_date = models.DateField(verbose_name="Дата старта лицензии")
+    finish_date = models.DateField(verbose_name="Дата окончания лицензии")
+    status = models.IntegerField(verbose_name="Статус лицензии")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.customer_name)
+
+
+class UserCandidate(models.Model):
+    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.mobile_phone)
+
+
+class UserEmployee(models.Model):
+    user_name = models.CharField(verbose_name="Логин / телефон (mobile phone)")
+    password = models.CharField(verbose_name="Пароль")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.user_name)
+
+
+class Candidate(models.Model):
+    id_customer = models.IntegerField(verbose_name="id заказчика")
+    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
+    first_name = models.CharField(max_length=64, verbose_name="Имя")
+    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
+    post = models.CharField(max_length=64, verbose_name="Должность")
+    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
+    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.last_name)
+
+
 class AdaptationStatus(models.Model):
     id_user_employee = models.IntegerField(verbose_name="id пользователя")
     id_stage = models.IntegerField(verbose_name="Ссылка на пройденный этап")
@@ -143,11 +178,17 @@ class AdaptationStatus(models.Model):
     point = models.IntegerField(verbose_name="Количество заработанных баллов")
     create_date = models.DateTimeField(verbose_name="Дата создания")
 
+    def __str__(self):
+        return str(self.id_stage)
+
 
 class Award(models.Model):
     award_name = models.CharField(max_length=128, verbose_name="Название награды")
     illustration = models.ImageField(verbose_name="Иллюстрация")
     tier = models.IntegerField(verbose_name="Номер по порядку")
+
+    def __str__(self):
+        return str(self.award_name)
 
 
 class AwardCandidate(models.Model):
@@ -155,10 +196,72 @@ class AwardCandidate(models.Model):
     id_candidate = models.IntegerField(verbose_name="Кандидат получивший награду")
     create_date = models.DateTimeField(verbose_name="Дата создания")
 
+    def __str__(self):
+        return str(self.award_name)
+
 
 class Message(models.Model):
     text_message = models.CharField(max_length=512, verbose_name="Текст сообщения")
     id_candidate = models.IntegerField(verbose_name="Кандидат оставивший сообщение")
     create_date = models.DateTimeField(verbose_name="Дата создания")
-    viewing_date = models.DateTimeField(verbose_name="Дата создания")
+    viewing_date = models.DateTimeField(verbose_name="Дата просмотра")
     status = models.IntegerField(verbose_name="Статус кандидата")
+
+    def __str__(self):
+        return str(self.id_candidate)
+
+
+class LnkLevelProgram(models.Model):
+    id_level = models.ForeignKey(Level.id, verbose_name="id level")
+    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self)
+
+
+class LnkStageLevel(models.Model):
+    id_stage = models.ForeignKey(AdaptationStage.id, verbose_name="id stage")
+    id_level = models.ForeignKey(Level.id, verbose_name="id level")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self)
+
+
+class LnkGoalProgram(models.Model):
+    id_goal = models.ForeignKey(Goal.id, verbose_name="id goal")
+    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self)
+
+
+class LnkDocumentProgram(models.Model):
+    id_document = models.ForeignKey(Document.id, verbose_name="id document")
+    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self)
+
+
+class LnkContactProgram(models.Model):
+    id_contact = models.ForeignKey(Contact.id, verbose_name="id contact")
+    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self)
+
