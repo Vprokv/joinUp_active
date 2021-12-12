@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'corsheaders',
-    # 'mainapp' Расскомментировую, кгда сервис заработает
+    'mainapp',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,19 +53,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS_ALLOW_ALL_ORIGINS = True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
-# # CORS_ALLOW_CREDENTIALS = True
-# CORS_ALLOWED_ORIGINS = [
+CORS_ALLOW_ALL_ORIGINS = True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3030',
+]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+# CORS_ALLOWED_ORIGIN_REGEXES = [
 #     'http://localhost:3030',
-# ]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
-# # CORS_ALLOWED_ORIGIN_REGEXES = [
-# #     'http://localhost:3030',
-# # ]
+# ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+#     'http://localhost:9000',
+#     'http://127.0.0.1:3000',
+#     'http://127.0.0.1:9000',
+#     'http://0.0.0.0:9000',
+# ]
 
 ROOT_URLCONF = 'joinup.urls'
 
