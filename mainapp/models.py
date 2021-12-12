@@ -16,6 +16,9 @@ class Employee(models.Model):
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
+    def __str__(self):
+        return "Сотрудник: {} {}".format(self.last_name, self.first_name)
+
 
 class Program(models.Model):
     program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
@@ -106,7 +109,7 @@ class Contact(models.Model):
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
     def __str__(self):
-        return str(self.id)
+        return "Контакт: {} {}".format(self.last_name, self.first_name)
 
 
 class Customer(models.Model):
@@ -122,7 +125,7 @@ class Customer(models.Model):
 
 
 class License(models.Model):
-    id_license_pack = models.IntegerField(verbose_name="Ссфлка пакет лицезий")
+    id_license_pack = models.IntegerField(verbose_name="Ссылка на пакет лицезий")
     id_candidate = models.IntegerField(verbose_name="ссылка на кандидата")
     start_date = models.DateField(verbose_name="Дата старта лицензии")
     finish_date = models.DateField(verbose_name="Дата окончания лицензии")
@@ -131,7 +134,7 @@ class License(models.Model):
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
     def __str__(self):
-        return str(self.customer_name)
+        return str(self.id_license_pack)
 
 
 class UserCandidate(models.Model):
@@ -168,7 +171,7 @@ class Candidate(models.Model):
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
     def __str__(self):
-        return str(self.last_name)
+        return "Кандидат: {} {}".format(self.last_name, self.first_name)
 
 
 class AdaptationStatus(models.Model):
@@ -212,8 +215,8 @@ class Message(models.Model):
 
 
 class LnkLevelProgram(models.Model):
-    id_level = models.ForeignKey(Level.id, verbose_name="id level")
-    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    id_level = models.ForeignKey(Level, verbose_name="id level")
+    id_program = models.ForeignKey(Program, verbose_name="id program")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
@@ -223,8 +226,8 @@ class LnkLevelProgram(models.Model):
 
 
 class LnkStageLevel(models.Model):
-    id_stage = models.ForeignKey(AdaptationStage.id, verbose_name="id stage")
-    id_level = models.ForeignKey(Level.id, verbose_name="id level")
+    id_stage = models.ForeignKey(AdaptationStage, verbose_name="id stage")
+    id_level = models.ForeignKey(Level, verbose_name="id level")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
@@ -234,8 +237,8 @@ class LnkStageLevel(models.Model):
 
 
 class LnkGoalProgram(models.Model):
-    id_goal = models.ForeignKey(Goal.id, verbose_name="id goal")
-    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    id_goal = models.ForeignKey(Goal, verbose_name="id goal")
+    id_program = models.ForeignKey(Program, verbose_name="id program")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
@@ -245,8 +248,8 @@ class LnkGoalProgram(models.Model):
 
 
 class LnkDocumentProgram(models.Model):
-    id_document = models.ForeignKey(Document.id, verbose_name="id document")
-    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    id_document = models.ForeignKey(Document, verbose_name="id document")
+    id_program = models.ForeignKey(Program, verbose_name="id program")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
@@ -256,8 +259,8 @@ class LnkDocumentProgram(models.Model):
 
 
 class LnkContactProgram(models.Model):
-    id_contact = models.ForeignKey(Contact.id, verbose_name="id contact")
-    id_program = models.ForeignKey(Program.id, verbose_name="id program")
+    id_contact = models.ForeignKey(Contact, verbose_name="id contact")
+    id_program = models.ForeignKey(Program, verbose_name="id program")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
