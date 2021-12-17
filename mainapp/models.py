@@ -63,7 +63,7 @@ class Block(models.Model):
     block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
     description = models.CharField(max_length=256, verbose_name="Cодержание блока")
     tier = models.IntegerField(verbose_name="Номер по порядку")
-    id_stage = models.IntegerField(verbose_name="Количество баллов")
+    id_stage = models.IntegerField(verbose_name="Этап")
     status = models.IntegerField(verbose_name="Статус блока")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")

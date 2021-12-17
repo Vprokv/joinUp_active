@@ -6,12 +6,16 @@ from .serializers import (
     EmployeeSerializer,
     LevelSerializer,
     AdaptationStageSerializer,
+    BlockSerializer,
+    GoalSerializer
 )
 from ..models import (
     Program,
     Employee,
     Level,
-    AdaptationStage
+    AdaptationStage,
+    Block,
+    Goal
 )
 
 
@@ -61,7 +65,7 @@ class LevelAPIView(ListCreateAPIView):
         'status',
         'create_date'
     ]
-    # TODO search id_level
+    # TODO search id_program
 
 
 class LevelDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -77,10 +81,43 @@ class AdaptationStageAPIView(ListCreateAPIView):
     search_fields = [
         'status',
         'create_date'
-    ] # TODO search id_level
+    ]  # TODO search id_level
 
 
 class AdaptationStageDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = AdaptationStageSerializer
-    queryset = Level.objects.all()
+    queryset = AdaptationStage.objects.all()
+    lookup_field = 'id'
+
+
+class BlockPIView(ListCreateAPIView):
+    serializer_class = BlockSerializer
+    queryset = Block.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'status',
+        'id_stage',
+        'create_date'
+    ]
+
+
+class BlockDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = BlockSerializer
+    queryset = Block.objects.all()
+    lookup_field = 'id'
+
+
+class GoalAPIView(ListCreateAPIView):
+    serializer_class = GoalSerializer
+    queryset = Goal.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'status',
+        'create_date'
+    ]  # TODO search id_program
+
+
+class GoalDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = GoalSerializer
+    queryset = Goal.objects.all()
     lookup_field = 'id'

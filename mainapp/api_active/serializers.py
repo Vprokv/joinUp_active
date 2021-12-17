@@ -4,7 +4,10 @@ from ..models import (
     Program,
     Employee,
     Level,
-    AdaptationStage
+    AdaptationStage,
+    Block,
+    Goal,
+    Document
 )
 
 
@@ -57,3 +60,39 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
     class Meta:
         model = AdaptationStage
         fields = '__all__'
+
+
+class BlockSerializer(serializers.ModelSerializer):
+    block_name = serializers.CharField()
+    description = serializers.CharField()
+    tier = serializers.IntegerField()
+    id_stage = serializers.IntegerField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = Block
+        fields = '__all__'
+
+
+class GoalSerializer(serializers.ModelSerializer):
+    goal_name = serializers.CharField()
+    description = serializers.CharField()
+    tier = serializers.IntegerField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = Goal
+        fields = '__all__'
+
+
+class DocumentSerializer(serializers.ModelSerializer):
+    document_name = serializers.CharField()
+    document_link = serializers.URLField()
+    tier = serializers.IntegerField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()

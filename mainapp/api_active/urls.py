@@ -8,7 +8,10 @@ from .api_views import (
     EmployeeDetailAPIView,
 
     LevelAPIView,
-    LevelDetailAPIView
+    LevelDetailAPIView,
+
+    GoalAPIView,
+    GoalDetailAPIView
 )
 
 urlpatterns = [
@@ -21,6 +24,12 @@ urlpatterns = [
     path('level/', LevelAPIView.as_view(), name='level'),
     path('level/<str:id>/', LevelDetailAPIView.as_view(), name='level detail'),
 
-    path('adaptationstage/', LevelAPIView.as_view(), name='level'),
-    path('adaptationstage/<str:id>/', LevelDetailAPIView.as_view(), name='level detail'),
+    path('adaptationstage/', LevelAPIView.as_view(), name='adaptation stage'),
+    path('adaptationstage/<str:id>/', LevelDetailAPIView.as_view(), name='adaptation stage detail'),
+
+    path('block/', LevelAPIView.as_view(), name='block'),
+    path('block/<str:id>/', LevelDetailAPIView.as_view(), name='block detail'),
+
+    path('goal/', GoalAPIView.as_view(), name='goal'),
+    path('goal/<str:id>/', GoalDetailAPIView.as_view(), name='goal detail'),
 ]
