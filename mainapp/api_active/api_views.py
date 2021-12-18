@@ -3,11 +3,14 @@ from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from .serializers import (
     ProgramSerializer,
+    ProgramDetailSerializer,
     EmployeeSerializer,
     LevelSerializer,
     AdaptationStageSerializer,
     BlockSerializer,
-    GoalSerializer
+    GoalSerializer,
+    DocumentSerializer,
+    ContactSerializer
 )
 from ..models import (
     Program,
@@ -15,7 +18,9 @@ from ..models import (
     Level,
     AdaptationStage,
     Block,
-    Goal
+    Goal,
+    Document,
+    Contact
 )
 
 
@@ -28,10 +33,16 @@ class PaginationBaseClass(PageNumberPagination):
 class AdaptationProgramAPIView(ListCreateAPIView):
     serializer_class = ProgramSerializer
     queryset = Program.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'id_customer',
+        'status',
+        'create_date'
+    ]
 
 
 class AdaptationProgramDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = ProgramSerializer
+    serializer_class = ProgramDetailSerializer
     queryset = Program.objects.all()
     lookup_field = 'id'
 
@@ -121,3 +132,36 @@ class GoalDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = GoalSerializer
     queryset = Goal.objects.all()
     lookup_field = 'id'
+
+
+class DocumentAPIView(ListCreateAPIView):
+    serializer_class = DocumentSerializer
+    queryset = Document.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'status',
+        'create_date'
+    ]  # TODO search id_program
+
+
+class DocumentDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = DocumentSerializer
+    queryset = Document.objects.all()
+    lookup_field = 'id'
+
+
+class ContactAPIView(ListCreateAPIView):
+    serializer_class = ContactSerializer
+    queryset = Contact.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'status',
+        'create_date'
+    ]  # TODO search id_program
+
+
+class ContactDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ContactSerializer
+    queryset = Contact.objects.all()
+    lookup_field = 'id'
+
