@@ -7,6 +7,7 @@ from .serializers import (
     EmployeeSerializer,
     LevelSerializer,
     AdaptationStageSerializer,
+    AdaptationStageDetailSerializer,
     BlockSerializer,
     GoalSerializer,
     DocumentSerializer,
@@ -72,11 +73,10 @@ class LevelAPIView(ListCreateAPIView):
     queryset = Level.objects.all()
     filter_backends = [SearchFilter]
     search_fields = [
-        'id_program',
+        'program',
         'status',
         'create_date'
     ]
-    # TODO search id_program
 
 
 class LevelDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -91,12 +91,13 @@ class AdaptationStageAPIView(ListCreateAPIView):
     filter_backends = [SearchFilter]
     search_fields = [
         'status',
-        'create_date'
-    ]  # TODO search id_level
+        'create_date',
+        'level'
+    ]
 
 
 class AdaptationStageDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = AdaptationStageSerializer
+    serializer_class = AdaptationStageDetailSerializer
     queryset = AdaptationStage.objects.all()
     lookup_field = 'id'
 
@@ -105,7 +106,7 @@ class BlockPIView(ListCreateAPIView):
     serializer_class = BlockSerializer
     queryset = Block.objects.all()
     filter_backends = [SearchFilter]
-    search_fields = [
+    adaptationStage = [
         'status',
         'id_stage',
         'create_date'
@@ -164,4 +165,3 @@ class ContactDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
     lookup_field = 'id'
-

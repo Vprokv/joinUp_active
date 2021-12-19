@@ -13,6 +13,34 @@ from ..models import (
 )
 
 
+class BlockSerializer(serializers.ModelSerializer):
+    block_name = serializers.CharField()
+    description = serializers.CharField()
+    tier = serializers.IntegerField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = Block
+        fields = '__all__'
+
+
+class AdaptationStageDetailSerializer(serializers.ModelSerializer):
+    stage_name = serializers.CharField()
+    illustration = serializers.ImageField(required=False)
+    tier = serializers.IntegerField()
+    point = serializers.IntegerField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+    blocks = BlockSerializer(many=True)
+
+    class Meta:
+        model = AdaptationStage
+        fields = '__all__'
+
+
 class AdaptationStageSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
     illustration = serializers.ImageField(required=False)
@@ -83,18 +111,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BlockSerializer(serializers.ModelSerializer):
-    block_name = serializers.CharField()
-    description = serializers.CharField()
-    tier = serializers.IntegerField()
-    id_stage = serializers.IntegerField()
-    status = serializers.IntegerField()
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
 
-    class Meta:
-        model = Block
-        fields = '__all__'
 
 
 class GoalSerializer(serializers.ModelSerializer):

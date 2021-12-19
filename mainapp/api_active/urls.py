@@ -10,6 +10,9 @@ from .api_views import (
     AdaptationStageAPIView,
     AdaptationStageDetailAPIView,
 
+    BlockPIView,
+    BlockDetailAPIView,
+
     LevelAPIView,
     LevelDetailAPIView,
 
@@ -37,8 +40,8 @@ urlpatterns = [
     path('adaptationstage/', AdaptationStageAPIView.as_view(), name='adaptation stage'),
     path('adaptationstage/<str:id>/', AdaptationStageDetailAPIView.as_view(), name='adaptation stage detail'),
 
-    path('block/', LevelAPIView.as_view(), name='block'),
-    path('block/<str:id>/', LevelDetailAPIView.as_view(), name='block detail'),
+    path('block/', BlockPIView.as_view(), name='block'),
+    path('block/<str:id>/', BlockDetailAPIView.as_view(), name='block detail'),
 
     path('goal/', GoalAPIView.as_view(), name='goal'),
     path('goal/<str:id>/', GoalDetailAPIView.as_view(), name='goal detail'),
