@@ -2,7 +2,6 @@ from django.db import models
 
 
 # Create your models here.
-# TODO: Crete index for adaptation stage table on  levelId.
 class Employee(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     id_user_employee = models.IntegerField(verbose_name="id пользователя")
@@ -21,6 +20,23 @@ class Employee(models.Model):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)
 
 
+class Contact(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
+    first_name = models.CharField(max_length=64, verbose_name="Имя")
+    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
+    post = models.CharField(max_length=64, verbose_name="Должность")
+    role = models.CharField(max_length=64, verbose_name="Роль")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    status = models.IntegerField(verbose_name="Статус контакта")
+    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return "Контакт: {} {}".format(self.last_name, self.first_name)
+
+
 class Program(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
@@ -31,6 +47,7 @@ class Program(models.Model):
     status = models.IntegerField(verbose_name="Статус программы")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    contact = models.ManyToManyField(Contact, verbose_name="Контакты")
 
     def __str__(self):
         return self.program_name
@@ -47,9 +64,10 @@ class Level(models.Model):
     program = models.ForeignKey(
         Program,
         verbose_name="программа",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='levels',
-        default=1
+        default=1,
+        null=True
     )
 
     def __str__(self):
@@ -68,9 +86,10 @@ class AdaptationStage(models.Model):
     level = models.ForeignKey(
         Level,
         verbose_name="уровень",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='stages',
-        default=1
+        default=1,
+        null=True
     )
 
     def __str__(self):
@@ -88,9 +107,10 @@ class Block(models.Model):
     adaptationStage = models.ForeignKey(
         AdaptationStage,
         verbose_name="Этап",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='blocks',
-        default=1
+        default=1,
+        null=True
     )
 
     def __str__(self):
@@ -105,6 +125,14 @@ class Goal(models.Model):
     status = models.IntegerField(verbose_name="Статус цели")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    program = models.ForeignKey(
+        Program,
+        verbose_name="программа",
+        on_delete=models.SET_NULL,
+        related_name='goals',
+        default=1,
+        null=True
+    )
 
     def __str__(self):
         return self.goal_name
@@ -118,26 +146,17 @@ class Document(models.Model):
     status = models.IntegerField(verbose_name="Статус цели")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    program = models.ForeignKey(
+        Program,
+        verbose_name="программа",
+        on_delete=models.SET_NULL,
+        related_name='documents',
+        default=1,
+        null=True
+    )
 
     def __str__(self):
         return self.document_name
-
-
-class Contact(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
-    first_name = models.CharField(max_length=64, verbose_name="Имя")
-    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
-    post = models.CharField(max_length=64, verbose_name="Должность")
-    role = models.CharField(max_length=64, verbose_name="Роль")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус контакта")
-    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return "Контакт: {} {}".format(self.last_name, self.first_name)
 
 
 class Customer(models.Model):

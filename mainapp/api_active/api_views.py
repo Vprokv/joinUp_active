@@ -125,8 +125,9 @@ class GoalAPIView(ListCreateAPIView):
     filter_backends = [SearchFilter]
     search_fields = [
         'status',
+        'program'
         'create_date'
-    ]  # TODO search id_program
+    ]
 
 
 class GoalDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -141,8 +142,9 @@ class DocumentAPIView(ListCreateAPIView):
     filter_backends = [SearchFilter]
     search_fields = [
         'status',
-        'create_date'
-    ]  # TODO search id_program
+        'create_date',
+        'program'
+    ]
 
 
 class DocumentDetailAPIView(RetrieveUpdateDestroyAPIView):
