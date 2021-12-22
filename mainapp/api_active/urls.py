@@ -25,6 +25,21 @@ from .api_views import (
     ContactAPIView,
     ContactDetailAPIView,
 
+    CustomerAPIView,
+    CustomerDetailAPIView,
+    LicensePackAPIView,
+    LicensePackDetailAPIView,
+    LicenseAPIView,
+    LicenseDetailAPIView,
+    UserCandidateAPIView,
+    UserCandidateDetailAPIView,
+    UserEmployeeAPIView,
+    UserEmployeeDetailAPIView,
+    CandidateAPIView,
+    AdaptationStatusAPIView,
+    AwardAPIView,
+    AwardCandidateAPIView,
+    MessageAPIView
 )
 
 urlpatterns = [
@@ -51,5 +66,38 @@ urlpatterns = [
 
     path('contact/', ContactAPIView.as_view(), name='contact'),
     path('contact/<str:id>/', ContactDetailAPIView.as_view(), name='contact detail'),
+
+    path('customer/', CustomerAPIView.as_view(), name='customer'),
+    path('customer/<str:id>/', CustomerDetailAPIView.as_view(), name='customer detail'),
+
+    path('licensepack/', LicensePackAPIView.as_view(), name='license pack'),
+    path('licensepack/<str:id>/', LicensePackDetailAPIView.as_view(), name='license pack detail'),
+
+    path('license/', LicenseAPIView.as_view(), name='license pack'),
+    path('licensepaclicensek/<str:id>/', LicenseDetailAPIView.as_view(), name='license pack detail'),
+
+    path('license/', UserCandidateAPIView.as_view(), name='license'),
+    path('licensepaclicensek/<str:id>/', UserCandidateDetailAPIView.as_view(), name='license detail'),
+
+    path('user/candidate/', UserEmployeeAPIView.as_view(), name='user candidate'),
+    path('user/candidate/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='user candidate detail'),
+
+    path('user/employee/', CandidateAPIView.as_view(), name='user employee'),
+    path('user/employe/<str:id>/', CandidateAPIView.as_view(), name='user employee detail'),
+
+    path('candidate/', UserEmployeeAPIView.as_view(), name='candidate employee'),
+    path('candidate/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='candidate employee detail'),
+
+    path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
+    path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
+
+    path('award/', AwardAPIView.as_view(), name='award '),
+    path('award/<str:id>/', AwardAPIView.as_view(), name='award detail'),
+
+    path('awardcandidate/', AwardCandidateAPIView.as_view(), name='award candidate '),
+    path('awardcandidate/<str:id>/', AwardCandidateAPIView.as_view(), name='award candidate detail'),
+
+    path('message/', MessageAPIView.as_view(), name='message  '),
+    path('message/<str:id>/', MessageAPIView.as_view(), name='message detail'),
 
 ]

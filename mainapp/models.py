@@ -4,7 +4,6 @@ from django.db import models
 # Create your models here.
 class Employee(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    id_user_employee = models.IntegerField(verbose_name="id пользователя")
     id_customer = models.IntegerField(verbose_name="id заказчика")
     last_name = models.CharField(max_length=64, verbose_name="Фамилия")
     first_name = models.CharField(max_length=64, verbose_name="Имя")
@@ -182,7 +181,7 @@ class LicensePack(models.Model):
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
     def __str__(self):
-        return str(self.id_license_pack)
+        return str(self.id)
 
 
 class License(models.Model):
@@ -281,62 +280,3 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.id_candidate)
-
-
-class LnkLevelProgram(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    id_level = models.ForeignKey(Level, verbose_name="id level", on_delete=models.CASCADE)
-    id_program = models.ForeignKey(Program, verbose_name="id program", on_delete=models.CASCADE)
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return str(self)
-
-# class LnkStageLevel(models.Model):
-#     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-#     id_stage = models.ForeignKey(AdaptationStage, verbose_name="id stage", on_delete=models.CASCADE)
-#     id_level = models.ForeignKey(Level, verbose_name="id level", on_delete=models.CASCADE)
-#     status = models.IntegerField(verbose_name="Статус записи")
-#     create_date = models.DateTimeField(verbose_name="Дата создания")
-#     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-#
-#     def __str__(self):
-#         return str(self)
-
-
-# class LnkGoalProgram(models.Model):
-#     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-#     id_goal = models.ForeignKey(Goal, verbose_name="id goal", on_delete=models.CASCADE)
-#     id_program = models.ForeignKey(Program, verbose_name="id program", on_delete=models.CASCADE)
-#     status = models.IntegerField(verbose_name="Статус записи")
-#     create_date = models.DateTimeField(verbose_name="Дата создания")
-#     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-#
-#     def __str__(self):
-#         return str(self)
-#
-#
-# class LnkDocumentProgram(models.Model):
-#     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-#     id_document = models.ForeignKey(Document, verbose_name="id document", on_delete=models.CASCADE)
-#     id_program = models.ForeignKey(Program, verbose_name="id program", on_delete=models.CASCADE)
-#     status = models.IntegerField(verbose_name="Статус записи")
-#     create_date = models.DateTimeField(verbose_name="Дата создания")
-#     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-#
-#     def __str__(self):
-#         return str(self)
-#
-#
-# class LnkContactProgram(models.Model):
-#     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-#     id_contact = models.ForeignKey(Contact, verbose_name="id contact", on_delete=models.CASCADE)
-#     id_program = models.ForeignKey(Program, verbose_name="id program", on_delete=models.CASCADE)
-#     status = models.IntegerField(verbose_name="Статус записи")
-#     create_date = models.DateTimeField(verbose_name="Дата создания")
-#     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-#
-#     def __str__(self):
-#         return str(self)

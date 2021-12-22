@@ -11,7 +11,18 @@ from .serializers import (
     BlockSerializer,
     GoalSerializer,
     DocumentSerializer,
-    ContactSerializer
+    ContactSerializer,
+    CustomerSerializer,
+    LicensePackSerializer,
+    LicenseSerializer,
+    UserCandidateSerializer,
+    UserEmployeeSerializer,
+    CandidateSerializer,
+    AdaptationStatusSerializer,
+    AwardSerializer,
+    AwardCandidateSerializer,
+    MessageSerializer
+
 )
 from ..models import (
     Program,
@@ -21,7 +32,17 @@ from ..models import (
     Block,
     Goal,
     Document,
-    Contact
+    Contact,
+    LicensePack,
+    Customer,
+    License,
+    UserCandidate,
+    UserEmployee,
+    Candidate,
+    AdaptationStatus,
+    Award,
+    AwardCandidate,
+    Message
 )
 
 
@@ -166,4 +187,121 @@ class ContactAPIView(ListCreateAPIView):
 class ContactDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
+    lookup_field = 'id'
+
+
+class CustomerAPIView(ListCreateAPIView):
+    serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'customer_name',
+        'city',
+        'status'
+    ]
+
+
+class CustomerDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
+    lookup_field = 'id'
+
+
+class LicensePackAPIView(ListCreateAPIView):
+    serializer_class = LicensePackSerializer
+    queryset = LicensePack.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'users_count',
+        'users_spent',
+        'status'
+    ]
+
+
+class LicensePackDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = LicensePackSerializer
+    queryset = LicensePack.objects.all()
+    lookup_field = 'id'
+
+
+class LicenseAPIView(ListCreateAPIView):
+    serializer_class = LicenseSerializer
+    queryset = License.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'id_license_pack',
+        'id_candidate',
+        'start_date',
+        'finish_date',
+        'status'
+    ]
+
+
+class LicenseDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = LicenseSerializer
+    queryset = License.objects.all()
+    lookup_field = 'id'
+
+
+class UserCandidateAPIView(ListCreateAPIView):
+    serializer_class = UserCandidateSerializer
+    queryset = UserCandidate.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'mobile_phone',
+        'status',
+        'create_date'
+    ]
+
+
+class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = UserCandidateSerializer
+    queryset = UserCandidate.objects.all()
+    lookup_field = 'id'
+
+
+class UserEmployeeAPIView(ListCreateAPIView):
+    serializer_class = UserEmployeeSerializer
+    queryset = UserEmployee.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'mobile_phone',
+        'status',
+        'create_date'
+    ]
+
+
+class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = UserEmployeeSerializer
+    queryset = UserEmployee.objects.all()
+    lookup_field = 'id'
+
+
+class CandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+    serializer_class = CandidateSerializer
+    queryset = Candidate.objects.all()
+    lookup_field = 'id'
+
+
+class AdaptationStatusAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+    serializer_class = AdaptationStatusSerializer
+    queryset = AdaptationStatus.objects.all()
+    lookup_field = 'id'
+
+
+class AwardAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+    serializer_class = AwardSerializer
+    queryset = Award.objects.all()
+    lookup_field = 'id'
+
+
+class AwardCandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+    serializer_class = AwardCandidateSerializer
+    queryset = AwardCandidate.objects.all()
+    lookup_field = 'id'
+
+
+class MessageAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+    serializer_class = MessageSerializer
+    queryset = Message.objects.all()
     lookup_field = 'id'

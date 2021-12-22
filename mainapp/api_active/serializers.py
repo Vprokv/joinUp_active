@@ -9,6 +9,16 @@ from ..models import (
     Goal,
     Document,
     Contact,
+    LicensePack,
+    Customer,
+    License,
+    UserCandidate,
+    UserEmployee,
+    Candidate,
+    AdaptationStatus,
+    Award,
+    AwardCandidate,
+    Message
 )
 
 
@@ -108,7 +118,8 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
-        'id', 'tier', 'duration_day', 'create_date', 'program_name', 'status', 'id_customer', 'id_employee', 'contact')
+            'id', 'tier', 'duration_day', 'create_date', 'program_name', 'status', 'id_customer', 'id_employee',
+            'contact')
 
 
 class GoalSerializer(serializers.ModelSerializer):
@@ -152,13 +163,140 @@ class ProgramDetailSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    id_customer = serializers.IntegerField()
     last_name = serializers.CharField()
     first_name = serializers.CharField()
     middle_name = serializers.CharField()
     post = serializers.CharField()
+    mobile_phone = serializers.CharField()
+    email = serializers.CharField()
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
 
     class Meta:
         model = Employee
+        fields = '__all__'
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    customer_name = serializers.CharField()
+    city = serializers.CharField()
+    address = serializers.CharField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+
+class LicensePackSerializer(serializers.ModelSerializer):
+    id_customer = serializers.IntegerField()
+    users_count = serializers.IntegerField()
+    users_spent = serializers.IntegerField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = LicensePack
+        fields = '__all__'
+
+
+class LicenseSerializer(serializers.ModelSerializer):
+    id_license_pack = serializers.IntegerField()
+    id_candidate = serializers.IntegerField()
+    start_date = serializers.DateField()
+    finish_date = serializers.DateField()
+    create_date = serializers.DateTimeField()
+    status = serializers.IntegerField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = License
+        fields = '__all__'
+
+
+class UserCandidateSerializer(serializers.ModelSerializer):
+    mobile_phone = serializers.CharField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = UserCandidate
+        fields = '__all__'
+
+
+class UserEmployeeSerializer(serializers.ModelSerializer):
+    mobile_phone = serializers.CharField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = UserEmployee
+        fields = '__all__'
+
+
+class CandidateSerializer(serializers.ModelSerializer):
+    id_customer = serializers.IntegerField()
+    last_name = serializers.CharField()
+    first_name = serializers.CharField()
+    middle_name = serializers.CharField()
+    post = serializers.CharField()
+    mobile_phone = serializers.CharField()
+    email = serializers.CharField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = Candidate
+        fields = '__all__'
+
+
+class AdaptationStatusSerializer(serializers.ModelSerializer):
+    id_user_employee = serializers.IntegerField()
+    id_stage = serializers.IntegerField()
+    id_goal = serializers.IntegerField()
+    point = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+
+    class Meta:
+        model = AdaptationStatus
+        fields = '__all__'
+
+
+class AwardSerializer(serializers.ModelSerializer):
+    award_name = serializers.CharField()
+    illustration = serializers.CharField()
+    tier = serializers.IntegerField()
+
+    class Meta:
+        model = Award
+        fields = '__all__'
+
+
+class AwardCandidateSerializer(serializers.ModelSerializer):
+    award_name = serializers.CharField()
+    id_candidate = serializers.IntegerField()
+    tier = serializers.IntegerField()
+
+    class Meta:
+        model = AwardCandidate
+        fields = '__all__'
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    text_message = serializers.CharField()
+    id_candidate = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    viewing_date = serializers.DateTimeField()
+    status = serializers.IntegerField()
+
+    class Meta:
+        model = Message
         fields = '__all__'
