@@ -57,8 +57,13 @@ class PaginationBaseClass(PageNumberPagination):
 class AdaptationProgramAPIView(ListCreateAPIView):
     serializer_class = ProgramSerializer
     queryset = Program.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'id_customer',
+        'status',
+        'create_date'
+    ]
+    filter_fields = [
         'id_customer',
         'status',
         'create_date'
@@ -92,7 +97,7 @@ class EmployeeAPIView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
     pagination_class = PaginationBaseClass
     queryset = Employee.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
+    filter_backends = [SearchFilter]
     search_fields = [
         'last_name',
         'first_name',
@@ -120,8 +125,10 @@ class EmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
 class LevelAPIView(ListCreateAPIView):
     serializer_class = LevelSerializer
     queryset = Level.objects.all()
-    filter_backends = [SearchFilter]
-    search_fields = [
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['program', 'status', 'create_date'],
+
+    filter_fields = [
         'program',
         'status',
         'create_date'
@@ -137,8 +144,13 @@ class LevelDetailAPIView(RetrieveUpdateDestroyAPIView):
 class AdaptationStageAPIView(ListCreateAPIView):
     serializer_class = AdaptationStageSerializer
     queryset = AdaptationStage.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'status',
+        'create_date',
+        'level'
+    ]
+    filter_fields = [
         'status',
         'create_date',
         'level'
@@ -154,8 +166,13 @@ class AdaptationStageDetailAPIView(RetrieveUpdateDestroyAPIView):
 class BlockPIView(ListCreateAPIView):
     serializer_class = BlockSerializer
     queryset = Block.objects.all()
-    filter_backends = [SearchFilter]
-    adaptationStage = [
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = [
+        'status',
+        'id_stage',
+        'create_date'
+    ]
+    filter_fields = [
         'status',
         'id_stage',
         'create_date'
@@ -171,8 +188,13 @@ class BlockDetailAPIView(RetrieveUpdateDestroyAPIView):
 class GoalAPIView(ListCreateAPIView):
     serializer_class = GoalSerializer
     queryset = Goal.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'status',
+        'program'
+        'create_date'
+    ]
+    filter_fields = [
         'status',
         'program'
         'create_date'
@@ -188,8 +210,13 @@ class GoalDetailAPIView(RetrieveUpdateDestroyAPIView):
 class DocumentAPIView(ListCreateAPIView):
     serializer_class = DocumentSerializer
     queryset = Document.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'status',
+        'create_date',
+        'program'
+    ]
+    filter_fields = [
         'status',
         'create_date',
         'program'
@@ -205,8 +232,12 @@ class DocumentDetailAPIView(RetrieveUpdateDestroyAPIView):
 class ContactAPIView(ListCreateAPIView):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'status',
+        'create_date'
+    ]
+    filter_fields = [
         'status',
         'create_date'
     ]  # TODO search id_program
@@ -221,8 +252,13 @@ class ContactDetailAPIView(RetrieveUpdateDestroyAPIView):
 class CustomerAPIView(ListCreateAPIView):
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'customer_name',
+        'city',
+        'status'
+    ]
+    filter_fields = [
         'customer_name',
         'city',
         'status'
@@ -238,8 +274,13 @@ class CustomerDetailAPIView(RetrieveUpdateDestroyAPIView):
 class LicensePackAPIView(ListCreateAPIView):
     serializer_class = LicensePackSerializer
     queryset = LicensePack.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'users_count',
+        'users_spent',
+        'status'
+    ]
+    filter_fields = [
         'users_count',
         'users_spent',
         'status'
@@ -255,8 +296,15 @@ class LicensePackDetailAPIView(RetrieveUpdateDestroyAPIView):
 class LicenseAPIView(ListCreateAPIView):
     serializer_class = LicenseSerializer
     queryset = License.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'id_license_pack',
+        'id_candidate',
+        'start_date',
+        'finish_date',
+        'status'
+    ]
+    filter_fields = [
         'id_license_pack',
         'id_candidate',
         'start_date',
@@ -274,8 +322,13 @@ class LicenseDetailAPIView(RetrieveUpdateDestroyAPIView):
 class UserCandidateAPIView(ListCreateAPIView):
     serializer_class = UserCandidateSerializer
     queryset = UserCandidate.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'mobile_phone',
+        'status',
+        'create_date'
+    ]
+    filter_fields = [
         'mobile_phone',
         'status',
         'create_date'
@@ -291,8 +344,13 @@ class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
 class UserEmployeeAPIView(ListCreateAPIView):
     serializer_class = UserEmployeeSerializer
     queryset = UserEmployee.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
+        'mobile_phone',
+        'status',
+        'create_date'
+    ]
+    filter_fields = [
         'mobile_phone',
         'status',
         'create_date'
@@ -302,34 +360,40 @@ class UserEmployeeAPIView(ListCreateAPIView):
 class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserEmployeeSerializer
     queryset = UserEmployee.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 
 
 class CandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 
 
 class AdaptationStatusAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = AdaptationStatusSerializer
     queryset = AdaptationStatus.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 
 
 class AwardAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = AwardSerializer
     queryset = Award.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 
 
 class AwardCandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = AwardCandidateSerializer
     queryset = AwardCandidate.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 
 
 class MessageAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'

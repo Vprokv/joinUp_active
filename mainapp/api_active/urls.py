@@ -51,23 +51,23 @@ urlpatterns = [
     path('employee/filter/', EmployeeAPIViewFilter.as_view(), name='employee filter for date and any params'),
     path('employee/<str:id>/', EmployeeDetailAPIView.as_view(), name='employee detail'),
 
-    path('level/', LevelAPIView.as_view(), name='level'),
-    path('level/<str:id>/', LevelDetailAPIView.as_view(), name='level detail'),
+    path('adaptationlevel/', LevelAPIView.as_view(), name='level'),
+    path('adaptationlevel/<str:id>/', LevelDetailAPIView.as_view(), name='level detail'),
 
     path('adaptationstage/', AdaptationStageAPIView.as_view(), name='adaptation stage'),
     path('adaptationstage/<str:id>/', AdaptationStageDetailAPIView.as_view(), name='adaptation stage detail'),
 
-    path('block/', BlockPIView.as_view(), name='block'),
-    path('block/<str:id>/', BlockDetailAPIView.as_view(), name='block detail'),
+    path('adaptationblock/', BlockPIView.as_view(), name='block'),
+    path('adaptationblock/<str:id>/', BlockDetailAPIView.as_view(), name='block detail'),
 
-    path('goal/', GoalAPIView.as_view(), name='goal'),
-    path('goal/<str:id>/', GoalDetailAPIView.as_view(), name='goal detail'),
+    path('adaptationbgoal/', GoalAPIView.as_view(), name='goal'),
+    path('adaptationbgoal/<str:id>/', GoalDetailAPIView.as_view(), name='goal detail'),
 
-    path('document/', DocumentAPIView.as_view(), name='document'),
-    path('document/<str:id>/', DocumentDetailAPIView.as_view(), name='document detail'),
+    path('adaptationdocument/', DocumentAPIView.as_view(), name='document'),
+    path('adaptationdocument/<str:id>/', DocumentDetailAPIView.as_view(), name='document detail'),
 
-    path('contact/', ContactAPIView.as_view(), name='contact'),
-    path('contact/<str:id>/', ContactDetailAPIView.as_view(), name='contact detail'),
+    path('adaptationcontact/', ContactAPIView.as_view(), name='contact'),
+    path('adaptationcontact/<str:id>/', ContactDetailAPIView.as_view(), name='contact detail'),
 
     path('customer/', CustomerAPIView.as_view(), name='customer'),
     path('customer/<str:id>/', CustomerDetailAPIView.as_view(), name='customer detail'),
@@ -101,5 +101,13 @@ urlpatterns = [
 
     path('message/', MessageAPIView.as_view(), name='message  '),
     path('message/<str:id>/', MessageAPIView.as_view(), name='message detail'),
+
+    # path('iadaptationcandidate/<str:id>/', IAdaptationProgramTestAPIView.as_view(), name='i adaptation program'),
+    # path('iadaptationprogram/<str:id>/', IAdaptationProgramTestAPIView.as_view(), name='i adaptation program'),
+    # path('ilevelstages/<str:id>/', ILevelStagesTestAPIView.as_view(), name='i level stages'),
+    # path('igoals/<str:id>/', IGoalsTestAPIView.as_view(), name='i goals'),
+    # path('idocuments/<str:id>/', IDocumentsTestAPIView.as_view(), name='i documents'),
+    # path('icontacts/', IContactsTestAPIView.as_view(), name='i contacts'),
+    # path('iblocks/', IBlocksTestAPIView.as_view(), name='i blocks')
 
 ]

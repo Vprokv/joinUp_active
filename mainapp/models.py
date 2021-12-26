@@ -2,6 +2,30 @@ from django.db import models
 
 
 # Create your models here.
+class UserCandidate(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
+    password = models.CharField(max_length=64, verbose_name="Пароль", default=1234)
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.mobile_phone)
+
+
+class UserEmployee(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    user_name = models.CharField(max_length=64, verbose_name="Логин / телефон (mobile phone)")
+    password = models.CharField(max_length=64, verbose_name="Пароль")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.user_name)
+
+
 class Employee(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     id_customer = models.IntegerField(verbose_name="id заказчика")
@@ -14,6 +38,13 @@ class Employee(models.Model):
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    employee = models.ForeignKey(
+        UserEmployee,
+        verbose_name="Cотрудник",
+        on_delete=models.SET_NULL,
+        related_name='employee',
+        null=True
+    )
 
     def __str__(self):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)
@@ -198,29 +229,6 @@ class License(models.Model):
         return str(self.id_license_pack)
 
 
-class UserCandidate(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return str(self.mobile_phone)
-
-
-class UserEmployee(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    user_name = models.CharField(max_length=64, verbose_name="Логин / телефон (mobile phone)")
-    password = models.CharField(max_length=64, verbose_name="Пароль")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return str(self.user_name)
-
-
 class Candidate(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     id_customer = models.IntegerField(verbose_name="id заказчика")
@@ -233,6 +241,13 @@ class Candidate(models.Model):
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    candidate = models.ForeignKey(
+        UserCandidate,
+        verbose_name="Кандидат",
+        on_delete=models.SET_NULL,
+        related_name='candidate',
+        null=True
+    )
 
     def __str__(self):
         return "Кандидат: {} {}".format(self.last_name, self.first_name)
