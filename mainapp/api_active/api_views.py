@@ -57,7 +57,7 @@ class PaginationBaseClass(PageNumberPagination):
 class AdaptationProgramAPIView(ListCreateAPIView):
     serializer_class = ProgramSerializer
     queryset = Program.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
+    filter_backends = [SearchFilter]
     search_fields = [
         'id_customer',
         'status',
@@ -77,8 +77,8 @@ class AdaptationProgramDetailAPIView(RetrieveUpdateDestroyAPIView):
 
 
 class EmployeeFilter(django_filters.FilterSet):
-    start_date = django_filters.DateTimeFilter(field_name='create_date', lookup_expr="gte")
-    end_date = django_filters.DateTimeFilter(field_name='create_date', lookup_expr="lte")
+    start_date = django_filters.DateTimeFilter(lookup_expr="gte")
+    end_date = django_filters.DateTimeFilter(lookup_expr="lte")
 
     class Meta:
         model = Employee
@@ -88,6 +88,7 @@ class EmployeeFilter(django_filters.FilterSet):
             'middle_name',
             'post',
             'status',
+            'create_date',
             'start_date',
             'end_date'
         ]
@@ -174,7 +175,6 @@ class BlockPIView(ListCreateAPIView):
     ]
     filter_fields = [
         'status',
-        'id_stage',
         'create_date'
     ]
 
@@ -196,7 +196,6 @@ class GoalAPIView(ListCreateAPIView):
     ]
     filter_fields = [
         'status',
-        'program'
         'create_date'
     ]
 
@@ -219,7 +218,7 @@ class DocumentAPIView(ListCreateAPIView):
     filter_fields = [
         'status',
         'create_date',
-        'program'
+        # 'program'
     ]
 
 
@@ -324,12 +323,10 @@ class UserCandidateAPIView(ListCreateAPIView):
     queryset = UserCandidate.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
-        'mobile_phone',
         'status',
         'create_date'
     ]
     filter_fields = [
-        'mobile_phone',
         'status',
         'create_date'
     ]
@@ -346,12 +343,12 @@ class UserEmployeeAPIView(ListCreateAPIView):
     queryset = UserEmployee.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
-        'mobile_phone',
+        'user_name',
         'status',
         'create_date'
     ]
     filter_fields = [
-        'mobile_phone',
+        'user_name',
         'status',
         'create_date'
     ]
