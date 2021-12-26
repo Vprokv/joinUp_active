@@ -258,6 +258,12 @@ class CandidateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ICandidateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidate
+        fields = ['id', 'candidate', 'program']
+
+
 class AdaptationStatusSerializer(serializers.ModelSerializer):
     id_user_employee = serializers.IntegerField()
     id_stage = serializers.IntegerField()

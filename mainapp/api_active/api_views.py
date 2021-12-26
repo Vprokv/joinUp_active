@@ -1,5 +1,5 @@
 import django_filters
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
@@ -23,7 +23,9 @@ from .serializers import (
     AdaptationStatusSerializer,
     AwardSerializer,
     AwardCandidateSerializer,
-    MessageSerializer
+    MessageSerializer,
+
+    ICandidateSerializer,
 
 )
 from ..models import (
@@ -366,6 +368,15 @@ class CandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     queryset = Candidate.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
+    filter_fields = ['candidate']
+
+
+class ICandidateAPIView(ListAPIView):
+    serializer_class = ICandidateSerializer
+    queryset = Candidate.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    lookup_field = 'id'
+    filter_fields = ['candidate']
 
 
 class AdaptationStatusAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):

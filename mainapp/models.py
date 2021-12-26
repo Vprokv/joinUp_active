@@ -248,6 +248,14 @@ class Candidate(models.Model):
         related_name='candidate',
         null=True
     )
+    program = models.ForeignKey(
+        Program,
+        verbose_name="программа",
+        on_delete=models.SET_NULL,
+        related_name='candidates',
+        default=1,
+        null=True
+    )
 
     def __str__(self):
         return "Кандидат: {} {}".format(self.last_name, self.first_name)
