@@ -283,7 +283,7 @@ class AwardSerializer(serializers.ModelSerializer):
 class AwardCandidateSerializer(serializers.ModelSerializer):
     award_name = serializers.CharField()
     id_candidate = serializers.IntegerField()
-    tier = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
 
     class Meta:
         model = AwardCandidate

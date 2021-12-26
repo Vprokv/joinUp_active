@@ -39,7 +39,8 @@ from .api_views import (
     AdaptationStatusAPIView,
     AwardAPIView,
     AwardCandidateAPIView,
-    MessageAPIView
+    MessageAPIView,
+    EmployeeAPIViewFilter
 )
 
 urlpatterns = [
@@ -47,6 +48,7 @@ urlpatterns = [
     path('adaptationprogram/<str:id>/', AdaptationProgramDetailAPIView.as_view(), name='adaptation program detail'),
 
     path('employee/', EmployeeAPIView.as_view(), name='employee'),
+    path('employee/filter/', EmployeeAPIViewFilter.as_view(), name='employee filter for date and any params'),
     path('employee/<str:id>/', EmployeeDetailAPIView.as_view(), name='employee detail'),
 
     path('level/', LevelAPIView.as_view(), name='level'),

@@ -1,5 +1,7 @@
+import django_filters
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
 from .serializers import (
     ProgramSerializer,
@@ -69,10 +71,28 @@ class AdaptationProgramDetailAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
+class EmployeeFilter(django_filters.FilterSet):
+    start_date = django_filters.DateTimeFilter(field_name='create_date', lookup_expr="gte")
+    end_date = django_filters.DateTimeFilter(field_name='create_date', lookup_expr="lte")
+
+    class Meta:
+        model = Employee
+        fields = [
+            'last_name',
+            'first_name',
+            'middle_name',
+            'post',
+            'status',
+            'start_date',
+            'end_date'
+        ]
+
+
 class EmployeeAPIView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
+    pagination_class = PaginationBaseClass
     queryset = Employee.objects.all()
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
         'last_name',
         'first_name',
@@ -81,6 +101,14 @@ class EmployeeAPIView(ListCreateAPIView):
         'status',
         'create_date'
     ]
+
+
+class EmployeeAPIViewFilter(ListCreateAPIView):
+    serializer_class = EmployeeSerializer
+    pagination_class = PaginationBaseClass
+    queryset = Employee.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    filterset_class = EmployeeFilter
 
 
 class EmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
