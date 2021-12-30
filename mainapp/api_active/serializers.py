@@ -71,7 +71,7 @@ class LevelSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
-    stages = AdaptationStageSerializer(many=True)
+    stages = AdaptationStageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Level
@@ -109,16 +109,47 @@ class ContactSerializerList(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProgramSerializer(serializers.ModelSerializer):
-    id_customer = serializers.IntegerField()
+class ProgramSerializerList(serializers.ModelSerializer):
+    class Meta:
+        model = Program
+        fields = '__all__'
+
+
+class CustomerSerializerList(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    customer_name = serializers.CharField()
+    city = serializers.CharField()
+    address = serializers.CharField()
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
+    programs = ProgramSerializerList(many=True, read_only=True)
+
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
 
     class Meta:
         model = Program
         fields = (
-            'id', 'tier', 'duration_day', 'create_date', 'program_name', 'status', 'id_customer', 'id_employee',
+            'id',
+            'tier',
+            'duration_day',
+            'create_date',
+            'program_name',
+            'status',
+            'customer',
+            'employee',
             'contact')
 
 
@@ -139,7 +170,6 @@ class DocumentSerializer(serializers.ModelSerializer):
     document_name = serializers.CharField()
     document_link = serializers.URLField()
     tier = serializers.IntegerField()
-    status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
 
@@ -149,13 +179,13 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 
 class ProgramDetailSerializer(serializers.ModelSerializer):
-    id_customer = serializers.IntegerField()
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     levels = LevelListSerializer(many=True, read_only=True)
     contacts = ContactSerializerList(read_only=True, many=True, source='contact')
     documents = DocumentSerializer(many=True, read_only=True)
     goals = GoalSerializer(many=True, read_only=True)
+    customer_detail = CustomerSerializerList(read_only=True)
 
     class Meta:
         model = Program
@@ -179,16 +209,29 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CustomerSerializer(serializers.ModelSerializer):
-    customer_name = serializers.CharField()
-    city = serializers.CharField()
-    address = serializers.CharField()
+class EmployeeSerializerDetail(serializers.ModelSerializer):
+    id_customer = serializers.IntegerField()
+    last_name = serializers.CharField()
+    first_name = serializers.CharField()
+    middle_name = serializers.CharField()
+    post = serializers.CharField()
+    mobile_phone = serializers.CharField()
+    email = serializers.CharField()
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
+    programs = ProgramDetailSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Customer
+        model = Employee
+        fields = '__all__'
+
+
+class EmployeeSerializerList(serializers.ModelSerializer):
+    programs = ProgramDetailSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Employee
         fields = '__all__'
 
 
@@ -231,10 +274,22 @@ class UserCandidateSerializer(serializers.ModelSerializer):
 
 
 class UserEmployeeSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField()
+    user_name = serializers.CharField()
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
+
+    class Meta:
+        model = UserEmployee
+        fields = '__all__'
+
+
+class UserEmployeeDetail(serializers.ModelSerializer):
+    user_name = serializers.CharField()
+    status = serializers.IntegerField()
+    create_date = serializers.DateTimeField()
+    id_employee = serializers.IntegerField()
+    employees = EmployeeSerializerList(read_only=True, many=True)
 
     class Meta:
         model = UserEmployee

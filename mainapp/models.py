@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
@@ -42,7 +45,7 @@ class Employee(models.Model):
         UserEmployee,
         verbose_name="Cотрудник",
         on_delete=models.SET_NULL,
-        related_name='employee',
+        related_name='employees',
         null=True
     )
 
@@ -55,6 +58,8 @@ class Contact(models.Model):
     last_name = models.CharField(max_length=64, verbose_name="Фамилия")
     first_name = models.CharField(max_length=64, verbose_name="Имя")
     middle_name = models.CharField(max_length=64, verbose_name="Отчество")
+    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон", null=True)
+    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты", null=True)
     post = models.CharField(max_length=64, verbose_name="Должность")
     role = models.CharField(max_length=64, verbose_name="Роль")
     tier = models.IntegerField(verbose_name="Номер по порядку")
@@ -67,16 +72,50 @@ class Contact(models.Model):
         return "Контакт: {} {}".format(self.last_name, self.first_name)
 
 
+class Customer(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    customer_name = models.CharField(max_length=64, verbose_name="Наименование заказчика")
+    city = models.CharField(max_length=64, verbose_name="Город")
+    address = models.CharField(max_length=128, verbose_name="Адрес")
+    status = models.IntegerField(verbose_name="Статус документа")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return str(self.customer_name)
+
+
 class Program(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
     description = models.CharField(max_length=256, verbose_name="Cодержание программы")
-    duration_day = models.IntegerField(verbose_name="Длительность адаптации")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    id_customer = models.IntegerField(verbose_name="Заказчик")
+    duration_day = models.IntegerField(verbose_name="Длительность адаптации", validators=[MinValueValidator(1)], default=1)
+    tier = models.IntegerField(verbose_name="Номер по порядку", validators=[MinValueValidator(1)])
+    customer = models.ForeignKey(
+        Customer,
+        verbose_name="Заказчик",
+        on_delete=models.SET_NULL,
+        related_name='programs',
+        default=1,
+        null=True
+    )
+    customer_detail = models.ForeignKey(
+        Customer,
+        verbose_name="Заказчик",
+        on_delete=models.SET_NULL,
+        related_name='programs_detail',
+        default=1,
+        null=True
+    )
     status = models.IntegerField(verbose_name="Статус программы")
     create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    employee = models.ForeignKey(
+        Employee,
+        verbose_name="Сотрудник создавший запись",
+        on_delete=models.SET_NULL,
+        related_name='programs',
+        null=True
+    )
     contact = models.ManyToManyField(Contact, verbose_name="Контакты")
 
     def __str__(self):
@@ -112,6 +151,7 @@ class AdaptationStage(models.Model):
     point = models.IntegerField(verbose_name="Количество баллов")
     status = models.IntegerField(verbose_name="Статус этапа")
     create_date = models.DateTimeField(verbose_name="Дата создания")
+    duration_day = models.IntegerField(verbose_name="Длительность этапа", validators=[MinValueValidator(1)])
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     level = models.ForeignKey(
         Level,
@@ -171,9 +211,8 @@ class Goal(models.Model):
 class Document(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
-    document_link = models.URLField(verbose_name="Ccсылка на файл")
+    document_link = models.URLField(verbose_name="Ccылка на файл")
     tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус цели")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     program = models.ForeignKey(
@@ -187,19 +226,6 @@ class Document(models.Model):
 
     def __str__(self):
         return self.document_name
-
-
-class Customer(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    customer_name = models.CharField(max_length=64, verbose_name="Наименование заказчика")
-    city = models.CharField(max_length=64, verbose_name="Город")
-    address = models.CharField(max_length=128, verbose_name="Адрес")
-    status = models.IntegerField(verbose_name="Статус документа")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return str(self.customer_name)
 
 
 class LicensePack(models.Model):
@@ -236,10 +262,12 @@ class Candidate(models.Model):
     first_name = models.CharField(max_length=64, verbose_name="Имя")
     middle_name = models.CharField(max_length=64, verbose_name="Отчество")
     post = models.CharField(max_length=64, verbose_name="Должность")
+    salary = models.IntegerField(verbose_name="ЗП", null=True)
     mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
     email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
+    release_date = models.DateField(verbose_name="Дата выходa", default=datetime.now())
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     candidate = models.ForeignKey(
         UserCandidate,

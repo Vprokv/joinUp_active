@@ -24,8 +24,9 @@ from .serializers import (
     AwardSerializer,
     AwardCandidateSerializer,
     MessageSerializer,
-
+    EmployeeSerializerDetail,
     ICandidateSerializer,
+    UserEmployeeDetail
 
 )
 from ..models import (
@@ -96,9 +97,9 @@ class EmployeeFilter(django_filters.FilterSet):
         ]
 
 
+# search
 class EmployeeAPIView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
-    pagination_class = PaginationBaseClass
     queryset = Employee.objects.all()
     filter_backends = [SearchFilter]
     search_fields = [
@@ -111,16 +112,16 @@ class EmployeeAPIView(ListCreateAPIView):
     ]
 
 
+# filter
 class EmployeeAPIViewFilter(ListCreateAPIView):
     serializer_class = EmployeeSerializer
-    pagination_class = PaginationBaseClass
     queryset = Employee.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     filterset_class = EmployeeFilter
 
 
 class EmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = EmployeeSerializer
+    serializer_class = EmployeeSerializerDetail
     queryset = Employee.objects.all()
     lookup_field = 'id'
 
@@ -357,7 +358,7 @@ class UserEmployeeAPIView(ListCreateAPIView):
 
 
 class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserEmployeeSerializer
+    serializer_class = UserEmployeeDetail
     queryset = UserEmployee.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
@@ -366,6 +367,7 @@ class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
 class CandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
+    pagination_class = PaginationBaseClass
     filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
     filter_fields = ['candidate']
