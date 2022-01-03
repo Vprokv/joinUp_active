@@ -170,7 +170,7 @@ class Candidate(models.Model):
         UserCandidate,
         verbose_name="Кандидат",
         on_delete=models.SET_NULL,
-        related_name='candidate',
+        related_name='candidates',
         null=True
     )
     program = models.ManyToManyField(Program, verbose_name="Программа")

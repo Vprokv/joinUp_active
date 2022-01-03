@@ -27,8 +27,8 @@ from .serializers import (
     EmployeeSerializerDetail,
     ICandidateSerializer,
     UserEmployeeDetail,
-    CandidateSerializerDetail
-
+    CandidateSerializerDetail,
+    UserCandidateDetailSerializer
 )
 from ..models import (
     Program,
@@ -309,7 +309,7 @@ class UserCandidateAPIView(ListCreateAPIView):
 
 
 class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserCandidateSerializer
+    serializer_class = UserCandidateDetailSerializer
     queryset = UserCandidate.objects.all()
     lookup_field = 'id'
 

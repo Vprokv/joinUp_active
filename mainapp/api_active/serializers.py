@@ -177,12 +177,6 @@ class DocumentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CandidateSerializerList(serializers.ModelSerializer):
-    class Meta:
-        model = Candidate
-        fields = '__all__'
-
-
 class DocumentSerializerList(serializers.ModelSerializer):
     class Meta:
         model = Document
@@ -298,6 +292,7 @@ class UserEmployeeDetail(serializers.ModelSerializer):
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
+    employees = EmployeeSerializerList(read_only=True, many=True)
 
     class Meta:
         model = UserEmployee
@@ -352,6 +347,14 @@ class CandidateSerializerDetail(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CandidateSerializerList(serializers.ModelSerializer):
+    # program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
+
+    class Meta:
+        model = Candidate
+        fields = '__all__'
+
+
 class UserCandidateSerializer(serializers.ModelSerializer):
     mobile_phone = serializers.CharField()
     status = serializers.IntegerField()
@@ -368,7 +371,7 @@ class UserCandidateDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
-    candidate = serializers.StringRelatedField(many=True)
+    candidates = CandidateSerializerList(read_only=True, many=True)
 
     class Meta:
         model = UserCandidate
