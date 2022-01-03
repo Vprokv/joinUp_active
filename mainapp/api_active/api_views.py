@@ -327,7 +327,7 @@ class UserEmployeeAPIView(ListCreateAPIView):
     ]
     filter_fields = [
         'user_name',
-        'status',
+        # 'status',
         'create_date'
     ]
 
@@ -350,7 +350,7 @@ class CandidateFilter(django_filters.FilterSet):
             'first_name',
             'middle_name',
             'post',
-            'status',
+            # 'status',
             'start_date',
             'end_date'
         ]
@@ -374,7 +374,7 @@ class CandidateAPIView(ListCreateAPIView):
         'first_name',
         'middle_name',
         'post',
-        'status',
+        # 'status',
         'create_date'
     ]
 

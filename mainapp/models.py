@@ -173,7 +173,7 @@ class Candidate(models.Model):
         related_name='candidate',
         null=True
     )
-    customer = models.ManyToManyField(Program, verbose_name="Программа")
+    program = models.ManyToManyField(Program, verbose_name="Программа")
 
     def __str__(self):
         return "Кандидат: {} {}".format(self.last_name, self.first_name)
