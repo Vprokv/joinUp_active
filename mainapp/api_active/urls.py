@@ -36,21 +36,31 @@ from .api_views import (
     UserEmployeeAPIView,
     UserEmployeeDetailAPIView,
     CandidateAPIView,
+    CandidateDetailAPIView,
     AdaptationStatusAPIView,
     AwardAPIView,
     AwardCandidateAPIView,
     MessageAPIView,
-    EmployeeAPIViewFilter,
+    CandidateAPIViewFilter,
     ICandidateAPIView
 )
 
 urlpatterns = [
-    path('adaptationprogram/', AdaptationProgramAPIView.as_view(), name='adaptation program'),
-    path('adaptationprogram/<str:id>/', AdaptationProgramDetailAPIView.as_view(), name='adaptation program detail'),
+    path('user/candidate/', UserCandidateAPIView.as_view(), name='user candidate'),
+    path('user/candidate/<str:id>/', UserCandidateDetailAPIView.as_view(), name='user candidate detail'),
+
+    path('user/employee/', UserEmployeeAPIView.as_view(), name='user employee'),
+    path('user/employee/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='user employee detail'),
+
+    path('candidate/', CandidateAPIView.as_view(), name='candidate employee'),
+    path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'),
+    path('candidate/<str:id>/', CandidateDetailAPIView.as_view(), name='candidate employee detail'),
 
     path('employee/', EmployeeAPIView.as_view(), name='employee'),
-    path('employee/filter/', EmployeeAPIViewFilter.as_view(), name='employee filter for date and any params'),
     path('employee/<str:id>/', EmployeeDetailAPIView.as_view(), name='employee detail'),
+
+    path('adaptationprogram/', AdaptationProgramAPIView.as_view(), name='adaptation program'),
+    path('adaptationprogram/<str:id>/', AdaptationProgramDetailAPIView.as_view(), name='adaptation program detail'),
 
     path('adaptationlevel/', LevelAPIView.as_view(), name='level'),
     path('adaptationlevel/<str:id>/', LevelDetailAPIView.as_view(), name='level detail'),
@@ -79,15 +89,6 @@ urlpatterns = [
     # path('license/', LicenseAPIView.as_view(), name='license pack'),
     # path('licensepaclicensek/<str:id>/', LicenseDetailAPIView.as_view(), name='license pack detail'),
 
-    path('user/candidate/', UserCandidateAPIView.as_view(), name='user candidate'),
-    path('user/candidate/<str:id>/', UserCandidateDetailAPIView.as_view(), name='user candidate detail'),
-
-    path('user/employee/', UserEmployeeAPIView.as_view(), name='user employee'),
-    path('user/employee/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='user employee detail'),
-
-    path('candidate/', CandidateAPIView.as_view(), name='candidate employee'),
-    path('candidate/<str:id>/', CandidateAPIView.as_view(), name='candidate employee detail'),
-
     path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
     path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
 
@@ -100,12 +101,10 @@ urlpatterns = [
     # path('message/', MessageAPIView.as_view(), name='message'),
     # path('message/<str:id>/', MessageAPIView.as_view(), name='message detail'),
 
-
     # Mobile services
 
     path('icandidate/', ICandidateAPIView.as_view(), name='i adaptation program'),
     path('icandidate/<str:id>/', ICandidateAPIView.as_view(), name='i adaptation program'),
-
 
     path('ilevelstages/', LevelAPIView.as_view(), name='i level stages'),
     path('ilevelstages/<str:id>/', LevelAPIView.as_view(), name='i level stages')

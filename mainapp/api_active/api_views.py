@@ -26,7 +26,8 @@ from .serializers import (
     MessageSerializer,
     EmployeeSerializerDetail,
     ICandidateSerializer,
-    UserEmployeeDetail
+    UserEmployeeDetail,
+    CandidateSerializerDetail
 
 )
 from ..models import (
@@ -79,24 +80,6 @@ class AdaptationProgramDetailAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
-class EmployeeFilter(django_filters.FilterSet):
-    start_date = django_filters.DateTimeFilter(lookup_expr="gte")
-    end_date = django_filters.DateTimeFilter(lookup_expr="lte")
-
-    class Meta:
-        model = Employee
-        fields = [
-            'last_name',
-            'first_name',
-            'middle_name',
-            'post',
-            'status',
-            'create_date',
-            'start_date',
-            'end_date'
-        ]
-
-
 # search
 class EmployeeAPIView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
@@ -110,14 +93,6 @@ class EmployeeAPIView(ListCreateAPIView):
         'status',
         'create_date'
     ]
-
-
-# filter
-class EmployeeAPIViewFilter(ListCreateAPIView):
-    serializer_class = EmployeeSerializer
-    queryset = Employee.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-    filterset_class = EmployeeFilter
 
 
 class EmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -364,13 +339,50 @@ class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
-class CandidateAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+class CandidateFilter(django_filters.FilterSet):
+    start_date = django_filters.DateTimeFilter(lookup_expr="gte")
+    end_date = django_filters.DateTimeFilter(lookup_expr="lte")
+
+    class Meta:
+        model = Candidate
+        fields = [
+            'last_name',
+            'first_name',
+            'middle_name',
+            'post',
+            'status',
+            'start_date',
+            'end_date'
+        ]
+
+
+# filter
+class CandidateAPIViewFilter(ListCreateAPIView):
+    serializer_class = CandidateSerializer
+    queryset = Candidate.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    filterset_class = CandidateFilter
+
+
+class CandidateAPIView(ListCreateAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
     pagination_class = PaginationBaseClass
-    filter_backends = [SearchFilter, DjangoFilterBackend]
+    filter_backends = [SearchFilter]
+    search_fields = [
+        'last_name',
+        'first_name',
+        'middle_name',
+        'post',
+        'status',
+        'create_date'
+    ]
+
+
+class CandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CandidateSerializerDetail
+    queryset = Candidate.objects.all()
     lookup_field = 'id'
-    filter_fields = ['candidate']
 
 
 class ICandidateAPIView(ListAPIView):

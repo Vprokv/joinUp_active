@@ -85,41 +85,29 @@ class Customer(models.Model):
         return str(self.customer_name)
 
 
-class Program(models.Model):
+class Goal(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
-    description = models.CharField(max_length=256, verbose_name="Cодержание программы")
-    duration_day = models.IntegerField(verbose_name="Длительность адаптации", validators=[MinValueValidator(1)], default=1)
-    tier = models.IntegerField(verbose_name="Номер по порядку", validators=[MinValueValidator(1)])
-    customer = models.ForeignKey(
-        Customer,
-        verbose_name="Заказчик",
-        on_delete=models.SET_NULL,
-        related_name='programs',
-        default=1,
-        null=True
-    )
-    customer_detail = models.ForeignKey(
-        Customer,
-        verbose_name="Заказчик",
-        on_delete=models.SET_NULL,
-        related_name='programs_detail',
-        default=1,
-        null=True
-    )
-    status = models.IntegerField(verbose_name="Статус программы")
+    goal_name = models.CharField(max_length=128, verbose_name="Наименование цели")
+    description = models.CharField(max_length=256, verbose_name="Cодержание цели")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    status = models.IntegerField(verbose_name="Статус цели")
     create_date = models.DateTimeField(verbose_name="Дата создания")
-    employee = models.ForeignKey(
-        Employee,
-        verbose_name="Сотрудник создавший запись",
-        on_delete=models.SET_NULL,
-        related_name='programs',
-        null=True
-    )
-    contact = models.ManyToManyField(Contact, verbose_name="Контакты")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
     def __str__(self):
-        return self.program_name
+        return self.goal_name
+
+
+class Document(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
+    document_link = models.URLField(verbose_name="Ccылка на файл")
+    tier = models.IntegerField(verbose_name="Номер по порядку")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+
+    def __str__(self):
+        return self.document_name
 
 
 class Level(models.Model):
@@ -130,17 +118,65 @@ class Level(models.Model):
     status = models.IntegerField(verbose_name="Статус уровня")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-    program = models.ForeignKey(
-        Program,
-        verbose_name="программа",
-        on_delete=models.SET_NULL,
-        related_name='levels',
-        default=1,
-        null=True
-    )
 
     def __str__(self):
         return self.level_name
+
+
+class Program(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
+    description = models.CharField(max_length=256, verbose_name="Cодержание программы")
+    duration_day = models.IntegerField(
+        verbose_name="Длительность адаптации",
+        validators=[MinValueValidator(1)],
+        default=1
+    )
+    tier = models.IntegerField(verbose_name="Номер по порядку", validators=[MinValueValidator(1)], default=1)
+    status = models.IntegerField(verbose_name="Статус программы", default=1)
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    employee = models.ForeignKey(
+        Employee,
+        verbose_name="Сотрудник создавший запись",
+        on_delete=models.SET_NULL,
+        related_name='programs',
+        null=True
+    )
+    contact = models.ManyToManyField(Contact, verbose_name="Контакты", null=True, blank=True)
+    customer = models.ManyToManyField(Customer, verbose_name="Заказчик", null=True, blank=True)
+    levels = models.ManyToManyField(Level, verbose_name="Уровни", null=True, blank=True)
+    documents = models.ManyToManyField(Document, verbose_name="Документы", null=True, blank=True)
+    goals = models.ManyToManyField(Goal, verbose_name="Цели", null=True, blank=True)
+
+    def __str__(self):
+        return self.program_name
+
+
+class Candidate(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    id_customer = models.IntegerField(verbose_name="id заказчика")
+    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
+    first_name = models.CharField(max_length=64, verbose_name="Имя")
+    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
+    post = models.CharField(max_length=64, verbose_name="Должность")
+    salary = models.IntegerField(verbose_name="ЗП", null=True)
+    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
+    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
+    status = models.IntegerField(verbose_name="Статус записи")
+    create_date = models.DateTimeField(verbose_name="Дата создания")
+    release_date = models.DateField(verbose_name="Дата выходa", default=datetime.now())
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    candidate = models.ForeignKey(
+        UserCandidate,
+        verbose_name="Кандидат",
+        on_delete=models.SET_NULL,
+        related_name='candidate',
+        null=True
+    )
+    customer = models.ManyToManyField(Program, verbose_name="Программа")
+
+    def __str__(self):
+        return "Кандидат: {} {}".format(self.last_name, self.first_name)
 
 
 class AdaptationStage(models.Model):
@@ -187,47 +223,6 @@ class Block(models.Model):
         return self.block_name
 
 
-class Goal(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    goal_name = models.CharField(max_length=128, verbose_name="Наименование цели")
-    description = models.CharField(max_length=256, verbose_name="Cодержание цели")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус цели")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-    program = models.ForeignKey(
-        Program,
-        verbose_name="программа",
-        on_delete=models.SET_NULL,
-        related_name='goals',
-        default=1,
-        null=True
-    )
-
-    def __str__(self):
-        return self.goal_name
-
-
-class Document(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
-    document_link = models.URLField(verbose_name="Ccылка на файл")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-    program = models.ForeignKey(
-        Program,
-        verbose_name="программа",
-        on_delete=models.SET_NULL,
-        related_name='documents',
-        default=1,
-        null=True
-    )
-
-    def __str__(self):
-        return self.document_name
-
-
 class LicensePack(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     id_customer = models.IntegerField(verbose_name="ссылка на кандидата")
@@ -253,40 +248,6 @@ class License(models.Model):
 
     def __str__(self):
         return str(self.id_license_pack)
-
-
-class Candidate(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    id_customer = models.IntegerField(verbose_name="id заказчика")
-    last_name = models.CharField(max_length=64, verbose_name="Фамилия")
-    first_name = models.CharField(max_length=64, verbose_name="Имя")
-    middle_name = models.CharField(max_length=64, verbose_name="Отчество")
-    post = models.CharField(max_length=64, verbose_name="Должность")
-    salary = models.IntegerField(verbose_name="ЗП", null=True)
-    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
-    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    release_date = models.DateField(verbose_name="Дата выходa", default=datetime.now())
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-    candidate = models.ForeignKey(
-        UserCandidate,
-        verbose_name="Кандидат",
-        on_delete=models.SET_NULL,
-        related_name='candidate',
-        null=True
-    )
-    program = models.ForeignKey(
-        Program,
-        verbose_name="программа",
-        on_delete=models.SET_NULL,
-        related_name='candidates',
-        default=1,
-        null=True
-    )
-
-    def __str__(self):
-        return "Кандидат: {} {}".format(self.last_name, self.first_name)
 
 
 class AdaptationStatus(models.Model):
