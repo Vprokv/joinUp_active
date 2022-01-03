@@ -189,14 +189,12 @@ class DocumentAPIView(ListCreateAPIView):
     queryset = Document.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
-        'status',
         'create_date',
-        'program'
+        'document_name'
     ]
     filter_fields = [
-        'status',
         'create_date',
-        # 'program'
+        'document_name'
     ]
 
 
@@ -217,7 +215,7 @@ class ContactAPIView(ListCreateAPIView):
     filter_fields = [
         'status',
         'create_date'
-    ]  # TODO search id_program
+    ]
 
 
 class ContactDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -327,7 +325,7 @@ class UserEmployeeAPIView(ListCreateAPIView):
     ]
     filter_fields = [
         'user_name',
-        # 'status',
+        'status',
         'create_date'
     ]
 
@@ -350,7 +348,7 @@ class CandidateFilter(django_filters.FilterSet):
             'first_name',
             'middle_name',
             'post',
-            # 'status',
+            'status',
             'start_date',
             'end_date'
         ]
@@ -374,7 +372,7 @@ class CandidateAPIView(ListCreateAPIView):
         'first_name',
         'middle_name',
         'post',
-        # 'status',
+        'status',
         'create_date'
     ]
 
