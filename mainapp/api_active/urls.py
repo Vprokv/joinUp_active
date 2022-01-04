@@ -54,8 +54,10 @@ urlpatterns = [
     path('user/employee/', UserEmployeeAPIView.as_view(), name='user employee'),
     path('user/employee/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='user employee detail'),
 
-    path('candidate/', CandidateAPIView.as_view(), name='candidate employee'),
-    path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'),
+    path('candidate/', CandidateAPIView.as_view(), name='candidate employee'), #any search!
+    path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'), #search and filter
+    # /api-active/candidate/filter/?post=разработчик&first_name=vv&status=1
+    # /api-active/candidate/filter/?search=разработчик&first_name=vv&status=1
     path('candidate/<str:id>/', CandidateDetailAPIView.as_view(), name='candidate employee detail'),
 
     path('employee/', EmployeeAPIView.as_view(), name='employee'),

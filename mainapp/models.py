@@ -164,7 +164,7 @@ class Candidate(models.Model):
     email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
-    release_date = models.DateField(verbose_name="Дата выходa", default=datetime.now())
+    release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     candidate = models.ForeignKey(
         UserCandidate,

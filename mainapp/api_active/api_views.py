@@ -340,8 +340,8 @@ class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
 
 
 class CandidateFilter(django_filters.FilterSet):
-    start_date = django_filters.DateTimeFilter(lookup_expr="gte")
-    end_date = django_filters.DateTimeFilter(lookup_expr="lte")
+    start_before = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="lte")
+    start_after = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="gte")
 
     class Meta:
         model = Candidate
@@ -351,8 +351,9 @@ class CandidateFilter(django_filters.FilterSet):
             'middle_name',
             'post',
             'status',
-            'start_date',
-            'end_date'
+            'start_before',
+            'start_after',
+            'create_date'
         ]
 
 
@@ -360,8 +361,8 @@ class CandidateFilter(django_filters.FilterSet):
 class CandidateAPIViewFilter(ListCreateAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
     filterset_class = CandidateFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
 
 
 class CandidateAPIView(ListCreateAPIView):
