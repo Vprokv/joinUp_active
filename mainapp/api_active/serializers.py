@@ -19,6 +19,7 @@ from ..models import (
     Award,
     AwardCandidate,
     Message,
+    JobDirectoryCatalogs
 )
 
 
@@ -432,3 +433,12 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = '__all__'
+
+
+class JobDirectorySerializer(serializers.ModelSerializer):
+    directory = serializers.CharField()
+
+    class Meta:
+        model = JobDirectoryCatalogs
+        fields = '__all__'
+

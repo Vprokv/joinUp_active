@@ -42,7 +42,9 @@ from .api_views import (
     AwardCandidateAPIView,
     MessageAPIView,
     CandidateAPIViewFilter,
-    ICandidateAPIView
+    ICandidateAPIView,
+    JobDirectoryAPIView,
+    JobDirectoryDetailAPIView
 )
 
 urlpatterns = [
@@ -83,6 +85,8 @@ urlpatterns = [
     path('customer/', CustomerAPIView.as_view(), name='customer'),
     path('customer/<str:id>/', CustomerDetailAPIView.as_view(), name='customer detail'),
 
+    path('directory/', JobDirectoryAPIView.as_view(), name='job directory catalog'),
+    path('directory/<str:id>/', JobDirectoryDetailAPIView.as_view(), name='job directory catalog'),
     # path('licensepack/', LicensePackAPIView.as_view(), name='license pack'),
     # path('licensepack/<str:id>/', LicensePackDetailAPIView.as_view(), name='license pack detail'),
     #

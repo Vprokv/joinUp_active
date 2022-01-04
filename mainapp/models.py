@@ -298,3 +298,8 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.id_candidate)
+
+
+class JobDirectoryCatalogs(models.Model):
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
+    directory = models.CharField(max_length=512, verbose_name="Должность", db_index=True)

@@ -28,7 +28,8 @@ from .serializers import (
     ICandidateSerializer,
     UserEmployeeDetail,
     CandidateSerializerDetail,
-    UserCandidateDetailSerializer
+    UserCandidateDetailSerializer,
+    JobDirectorySerializer
 )
 from ..models import (
     Program,
@@ -48,7 +49,8 @@ from ..models import (
     AdaptationStatus,
     Award,
     AwardCandidate,
-    Message
+    Message,
+    JobDirectoryCatalogs
 )
 
 
@@ -416,4 +418,15 @@ class MessageAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
+    lookup_field = 'id'
+
+
+class JobDirectoryAPIView(ListCreateAPIView):
+    serializer_class = JobDirectorySerializer
+    queryset = JobDirectoryCatalogs.objects.all()
+
+
+class JobDirectoryDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = JobDirectorySerializer
+    queryset = JobDirectoryCatalogs.objects.all()
     lookup_field = 'id'
