@@ -332,6 +332,12 @@ class CandidateSerializer(serializers.ModelSerializer):
         )
 
 
+class AdaptationStatusSerializerDetail(serializers.ModelSerializer):
+    class Meta:
+        model = AdaptationStatus
+        fields = '__all__'
+
+
 class CandidateSerializerDetail(serializers.ModelSerializer):
     last_name = serializers.CharField()
     first_name = serializers.CharField()
@@ -341,6 +347,7 @@ class CandidateSerializerDetail(serializers.ModelSerializer):
     email = serializers.CharField()
     status = serializers.IntegerField()
     program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
+    adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
 
     class Meta:
         model = Candidate
@@ -348,7 +355,7 @@ class CandidateSerializerDetail(serializers.ModelSerializer):
 
 
 class CandidateSerializerList(serializers.ModelSerializer):
-    # program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
+    program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
 
     class Meta:
         model = Candidate
@@ -385,9 +392,8 @@ class ICandidateSerializer(serializers.ModelSerializer):
 
 
 class AdaptationStatusSerializer(serializers.ModelSerializer):
-    id_user_employee = serializers.IntegerField()
     id_stage = serializers.IntegerField()
-    id_goal = serializers.IntegerField()
+    id_goal = serializers.IntegerField(required=False)
     point = serializers.IntegerField()
     create_date = serializers.DateTimeField()
 

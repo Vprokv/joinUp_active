@@ -89,8 +89,8 @@ urlpatterns = [
     # path('license/', LicenseAPIView.as_view(), name='license pack'),
     # path('licensepaclicensek/<str:id>/', LicenseDetailAPIView.as_view(), name='license pack detail'),
 
-    # path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
-    # path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
+    path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
+    path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
 
     # path('award/', AwardAPIView.as_view(), name='award '),
     # path('award/<str:id>/', AwardAPIView.as_view(), name='award detail'),

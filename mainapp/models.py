@@ -252,9 +252,15 @@ class License(models.Model):
 
 class AdaptationStatus(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    id_user_employee = models.IntegerField(verbose_name="id пользователя")
-    id_stage = models.IntegerField(verbose_name="Ссылка на пройденный этап")
-    id_goal = models.IntegerField(verbose_name="Ссылка на выполненную цель")
+    candidate = models.ForeignKey(
+        Candidate,
+        verbose_name="Кандидат",
+        on_delete=models.SET_NULL,
+        related_name='adaptation_status',
+        null=True
+    )
+    id_stage = models.IntegerField(verbose_name="Ссылка на пройденный этап", null=True)
+    id_goal = models.IntegerField(verbose_name="Ссылка на выполненную цель", null=True)
     point = models.IntegerField(verbose_name="Количество заработанных баллов")
     create_date = models.DateTimeField(verbose_name="Дата создания")
 
