@@ -1,11 +1,13 @@
-install  packets django-cors-headers
+command start project
+for docker
+1. docker-compose build
+2. docker-compose up
 
-pip3 install django-cors-headers
-
-
-command start project 
-1. for docker: docker-compose up
-2. for python: python3 manage.py runserver
+for back-end(required postgres instance on 5430 port)
+1. replace joinup/settings.py/DATABASES/HOST by 'postgres' -> 'localhost'
+2. pip install -r requirements.txt
+3. python3 manage.py migrate
+4. python3 manage.py runserver
 
 API
 1. for docker: http://127.0.0.1:8000/api/
