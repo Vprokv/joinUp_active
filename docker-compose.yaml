@@ -5,8 +5,6 @@ services:
     restart: always
     networks:
       - api-server-network
-    volumes:
-      - ./.database/postgres/data:/var/lib/postgresql/data
     ports:
       - "5430:5430"
     environment:
