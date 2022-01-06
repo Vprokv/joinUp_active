@@ -14,7 +14,7 @@ services:
     command: -p 5430
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:9000
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:9000"
     restart: always
     volumes:
       - .:/code
@@ -27,16 +27,9 @@ services:
     links:
       - postgres:postgres
     depends_on:
-      - migration
       - postgres
     networks:
       - api-server-network
-  migration:
-    command: python manage.py migrate
-    volumes:
-      - .:/code
-    depends_on:
-      - postgres
 
 networks:
   api-server-network:
