@@ -27,16 +27,16 @@ services:
     links:
       - postgres:postgres
     depends_on:
-#      - migration
+      - migration
       - postgres
     networks:
       - api-server-network
-#  migration:
-#    command: python manage.py migrate
-#    volumes:
-#      - .:/code
-#    depends_on:
-#      - postgres
+  migration:
+    command: python manage.py migrate
+    volumes:
+      - .:/code
+    depends_on:
+      - postgres
 
 networks:
   api-server-network:
