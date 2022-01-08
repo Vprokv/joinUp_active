@@ -3,6 +3,8 @@ from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpda
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
+
 from .serializers import (
     ProgramSerializer,
     ProgramDetailSerializer,
@@ -87,6 +89,7 @@ class EmployeeAPIView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
     filter_backends = [SearchFilter]
+    permission_classes = [IsAuthenticated]
     search_fields = [
         'last_name',
         'first_name',
@@ -353,7 +356,8 @@ class CandidateFilter(django_filters.FilterSet):
             'status',
             'start_before',
             'start_after',
-            'create_date'
+            'create_date',
+            'mobile_phone'
         ]
 
 
@@ -376,7 +380,8 @@ class CandidateAPIView(ListCreateAPIView):
         'middle_name',
         'post',
         'status',
-        'create_date'
+        'create_date',
+        'mobile_phone'
     ]
 
 

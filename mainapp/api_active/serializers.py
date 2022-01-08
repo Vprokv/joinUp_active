@@ -210,6 +210,14 @@ class ProgramDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProgramDetailForCandidateSerializer(serializers.ModelSerializer):
+    levels_detail = LevelListSerializer(many=True, read_only=True, source='levels')
+
+    class Meta:
+        model = Program
+        fields = ('id', 'levels_detail')
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
     id_customer = serializers.IntegerField()
     last_name = serializers.CharField()
@@ -300,6 +308,12 @@ class UserEmployeeDetail(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AdaptationStatusSerializerDetail(serializers.ModelSerializer):
+    class Meta:
+        model = AdaptationStatus
+        fields = '__all__'
+
+
 class CandidateSerializer(serializers.ModelSerializer):
     id_customer = serializers.IntegerField()
     last_name = serializers.CharField()
@@ -311,6 +325,8 @@ class CandidateSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField()
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
+    program_details = ProgramDetailForCandidateSerializer(many=True, read_only=True, source='program')
+    adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
 
     class Meta:
         model = Candidate
@@ -329,14 +345,10 @@ class CandidateSerializer(serializers.ModelSerializer):
             'id_employee',
             'candidate',
             'program',
-            'id_customer'
+            'id_customer',
+            'program_details',
+            'adaptation_status'
         )
-
-
-class AdaptationStatusSerializerDetail(serializers.ModelSerializer):
-    class Meta:
-        model = AdaptationStatus
-        fields = '__all__'
 
 
 class CandidateSerializerDetail(serializers.ModelSerializer):
@@ -441,4 +453,3 @@ class JobDirectorySerializer(serializers.ModelSerializer):
     class Meta:
         model = JobDirectoryCatalogs
         fields = '__all__'
-

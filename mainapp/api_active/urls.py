@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .api_views import (
     AdaptationProgramAPIView,
@@ -42,17 +42,19 @@ from .api_views import (
     AwardCandidateAPIView,
     MessageAPIView,
     CandidateAPIViewFilter,
-    ICandidateAPIView,
     JobDirectoryAPIView,
     JobDirectoryDetailAPIView
 )
 
 urlpatterns = [
-    path('user/candidate/', UserCandidateAPIView.as_view(), name='user candidate'),
-    path('user/candidate/<str:id>/', UserCandidateDetailAPIView.as_view(), name='user candidate detail'),
+    # path('user/candidate/', UserCandidateAPIView.as_view(), name='user candidate'),
+    # path('user/candidate/<str:id>/', UserCandidateDetailAPIView.as_view(), name='user candidate detail'),
+    #
+    # path('user/employee/', UserEmployeeAPIView.as_view(), name='user employee'),
+    # path('user/employee/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='user employee detail'),
 
-    path('user/employee/', UserEmployeeAPIView.as_view(), name='user employee'),
-    path('user/employee/<str:id>/', UserEmployeeDetailAPIView.as_view(), name='user employee detail'),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 
     path('candidate/', CandidateAPIView.as_view(), name='candidate employee'), #any search!
     path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'), #search and filter
@@ -89,14 +91,15 @@ urlpatterns = [
 
     path('directory/', JobDirectoryAPIView.as_view(), name='job directory catalog'),
     path('directory/<str:id>/', JobDirectoryDetailAPIView.as_view(), name='job directory catalog'),
+
+    path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
+    path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
+
     # path('licensepack/', LicensePackAPIView.as_view(), name='license pack'),
     # path('licensepack/<str:id>/', LicensePackDetailAPIView.as_view(), name='license pack detail'),
     #
     # path('license/', LicenseAPIView.as_view(), name='license pack'),
     # path('licensepaclicensek/<str:id>/', LicenseDetailAPIView.as_view(), name='license pack detail'),
-
-    path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
-    path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
 
     # path('award/', AwardAPIView.as_view(), name='award '),
     # path('award/<str:id>/', AwardAPIView.as_view(), name='award detail'),
@@ -105,13 +108,5 @@ urlpatterns = [
     # path('awardcandidate/<str:id>/', AwardCandidateAPIView.as_view(), name='award candidate detail'),
     #
     # path('message/', MessageAPIView.as_view(), name='message'),
-    # path('message/<str:id>/', MessageAPIView.as_view(), name='message detail'),
-
-    # Mobile services
-
-    path('icandidate/', ICandidateAPIView.as_view(), name='i adaptation program'),
-    path('icandidate/<str:id>/', ICandidateAPIView.as_view(), name='i adaptation program'),
-
-    path('ilevelstages/', LevelAPIView.as_view(), name='i level stages'),
-    path('ilevelstages/<str:id>/', LevelAPIView.as_view(), name='i level stages')
+    # path('message/<str:id>/', MessageAPIView.as_view(), name='message detail')
 ]
