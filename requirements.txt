@@ -29,4 +29,4 @@ django-filter~=21.1
 djoser==2.1.0
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==5.0.0
-pyjwt=2.3.0
+pyjwt==2.3.0
