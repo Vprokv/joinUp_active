@@ -25,11 +25,11 @@ from ..models import (
 
 class BlockSerializer(serializers.ModelSerializer):
     block_name = serializers.CharField()
-    description = serializers.CharField()
-    tier = serializers.IntegerField()
-    status = serializers.IntegerField()
+    description = serializers.CharField(required=False)
+    tier = serializers.IntegerField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = Block
@@ -39,11 +39,11 @@ class BlockSerializer(serializers.ModelSerializer):
 class AdaptationStageDetailSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
     illustration = serializers.ImageField(required=False)
-    tier = serializers.IntegerField()
-    point = serializers.IntegerField()
-    status = serializers.IntegerField()
+    tier = serializers.IntegerField(required=False)
+    point = serializers.IntegerField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
     blocks = BlockSerializer(many=True)
 
     class Meta:
@@ -54,11 +54,11 @@ class AdaptationStageDetailSerializer(serializers.ModelSerializer):
 class AdaptationStageSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
     illustration = serializers.ImageField(required=False)
-    tier = serializers.IntegerField()
-    point = serializers.IntegerField()
-    status = serializers.IntegerField()
+    tier = serializers.IntegerField(required=False)
+    point = serializers.IntegerField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = AdaptationStage
@@ -68,10 +68,10 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
 class LevelSerializer(serializers.ModelSerializer):
     level_name = serializers.CharField()
     illustration = serializers.ImageField(required=False)
-    tier = serializers.IntegerField()
-    status = serializers.IntegerField()
+    tier = serializers.IntegerField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
     stages = AdaptationStageSerializer(many=True, read_only=True)
 
     class Meta:
@@ -90,14 +90,14 @@ class LevelListSerializer(serializers.ModelSerializer):
 class ContactSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField()
     first_name = serializers.CharField()
-    middle_name = serializers.CharField()
-    post = serializers.CharField()
-    role = serializers.CharField()
-    tier = serializers.IntegerField()
-    status = serializers.IntegerField()
+    middle_name = serializers.CharField(required=False)
+    post = serializers.CharField(required=False)
+    role = serializers.CharField(required=False)
+    tier = serializers.IntegerField(required=False)
+    status = serializers.IntegerField(required=False)
     illustration_link = serializers.URLField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = Contact
@@ -118,11 +118,11 @@ class ProgramSerializerList(serializers.ModelSerializer):
 
 class CustomerSerializer(serializers.ModelSerializer):
     customer_name = serializers.CharField()
-    city = serializers.CharField()
-    address = serializers.CharField()
-    status = serializers.IntegerField()
+    city = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
     programs = ProgramSerializerList(many=True, read_only=True)
 
     class Meta:
@@ -131,35 +131,23 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class ProgramSerializer(serializers.ModelSerializer):
-    status = serializers.IntegerField()
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     tier = serializers.IntegerField(required=False)
+    description = serializers.CharField(required=False)
 
     class Meta:
         model = Program
-        fields = (
-            'id',
-            'tier',
-            'duration_day',
-            'create_date',
-            'program_name',
-            'status',
-            'customer',
-            'employee',
-            'contact',
-            'levels',
-            'documents',
-            'goals',
-        )
+        fields = '__all__'
 
 
 class GoalSerializer(serializers.ModelSerializer):
     goal_name = serializers.CharField()
-    description = serializers.CharField()
-    tier = serializers.IntegerField()
-    status = serializers.IntegerField()
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    description = serializers.CharField(required=False)
+    tier = serializers.IntegerField(required=False)
+    status = serializers.IntegerField(required=False)
+    create_date = serializers.DateTimeField(required=False)
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = Goal
@@ -167,11 +155,11 @@ class GoalSerializer(serializers.ModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    document_name = serializers.CharField()
+    document_name = serializers.CharField(required=False)
     document_link = serializers.URLField()
-    tier = serializers.IntegerField()
+    tier = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = Document
@@ -197,7 +185,7 @@ class CustomerSerializerList(serializers.ModelSerializer):
 
 
 class ProgramDetailSerializer(serializers.ModelSerializer):
-    status = serializers.IntegerField()
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     levels_detail = LevelListSerializer(many=True, read_only=True, source='levels')
     contacts_detail = ContactSerializerList(read_only=True, many=True, source='contact')
@@ -222,13 +210,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
     id_customer = serializers.IntegerField()
     last_name = serializers.CharField()
     first_name = serializers.CharField()
-    middle_name = serializers.CharField()
-    post = serializers.CharField()
-    mobile_phone = serializers.CharField()
-    email = serializers.CharField()
-    status = serializers.IntegerField()
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    middle_name = serializers.CharField(required=False)
+    post = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
+    create_date = serializers.DateTimeField(required=False)
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = Employee
@@ -236,16 +224,16 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializerDetail(serializers.ModelSerializer):
-    id_customer = serializers.IntegerField()
+    id_customer = serializers.IntegerField(required=False)
     last_name = serializers.CharField()
     first_name = serializers.CharField()
-    middle_name = serializers.CharField()
-    post = serializers.CharField()
-    mobile_phone = serializers.CharField()
-    email = serializers.CharField()
-    status = serializers.IntegerField()
+    middle_name = serializers.CharField(required=False)
+    post = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = Employee
@@ -286,10 +274,10 @@ class LicenseSerializer(serializers.ModelSerializer):
 
 
 class UserEmployeeSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField()
-    status = serializers.IntegerField()
+    user_name = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = UserEmployee
@@ -297,10 +285,10 @@ class UserEmployeeSerializer(serializers.ModelSerializer):
 
 
 class UserEmployeeDetail(serializers.ModelSerializer):
-    user_name = serializers.CharField()
-    status = serializers.IntegerField()
+    user_name = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
     employees = EmployeeSerializerList(read_only=True, many=True)
 
     class Meta:
@@ -315,16 +303,16 @@ class AdaptationStatusSerializerDetail(serializers.ModelSerializer):
 
 
 class CandidateSerializer(serializers.ModelSerializer):
-    id_customer = serializers.IntegerField()
+    id_customer = serializers.IntegerField(required=False)
     last_name = serializers.CharField()
     first_name = serializers.CharField()
-    middle_name = serializers.CharField()
-    post = serializers.CharField()
-    mobile_phone = serializers.CharField()
-    email = serializers.CharField()
-    status = serializers.IntegerField()
+    middle_name = serializers.CharField(required=False)
+    post = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
     program_details = ProgramDetailForCandidateSerializer(many=True, read_only=True, source='program')
     adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
 
@@ -355,10 +343,10 @@ class CandidateSerializerDetail(serializers.ModelSerializer):
     last_name = serializers.CharField()
     first_name = serializers.CharField()
     middle_name = serializers.CharField()
-    post = serializers.CharField()
-    mobile_phone = serializers.CharField()
-    email = serializers.CharField()
-    status = serializers.IntegerField()
+    post = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
     adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
 
@@ -376,10 +364,10 @@ class CandidateSerializerList(serializers.ModelSerializer):
 
 
 class UserCandidateSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField()
-    status = serializers.IntegerField()
+    mobile_phone = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
+    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = UserCandidate
@@ -387,8 +375,8 @@ class UserCandidateSerializer(serializers.ModelSerializer):
 
 
 class UserCandidateDetailSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField()
-    status = serializers.IntegerField()
+    mobile_phone = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()
     candidates = CandidateSerializerList(read_only=True, many=True)
@@ -407,7 +395,7 @@ class ICandidateSerializer(serializers.ModelSerializer):
 class AdaptationStatusSerializer(serializers.ModelSerializer):
     id_stage = serializers.IntegerField()
     id_goal = serializers.IntegerField(required=False)
-    point = serializers.IntegerField()
+    point = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
 
     class Meta:
