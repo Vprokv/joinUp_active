@@ -31,6 +31,38 @@ services:
     networks:
       - api-server-network
 
+  mobile:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:9001"
+    restart: always
+    volumes:
+      - .:/code
+    ports:
+      - "9001:9001"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=postgres
+      - AUTH_DB=mainapp.usercandidate
+    links:
+      - postgres:postgres
+    depends_on:
+      - postgres
+    networks:
+      - api-server-network
+  nginx:
+    image: 1.21.5-alpine
+    ports:
+      - "80:80"
+#        - "443:443" включить если появиться https
+    # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
+    volumes:
+      - ./conf:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - web
+      - mobile
+
 networks:
   api-server-network:
     driver: bridge

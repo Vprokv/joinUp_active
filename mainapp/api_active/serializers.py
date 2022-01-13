@@ -365,7 +365,8 @@ class CandidateSerializerList(serializers.ModelSerializer):
 
 
 class UserCandidateSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
@@ -376,7 +377,8 @@ class UserCandidateSerializer(serializers.ModelSerializer):
 
 
 class UserCandidateDetailSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField()

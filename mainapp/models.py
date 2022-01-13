@@ -2,12 +2,39 @@ from datetime import datetime
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+
+class BaseAccountManager(BaseUserManager):
+    def create_user(self, email, password=None, **kwargs):
+        if not email:
+            raise ValueError('Users must have a valid email address.')
+
+        account = self.model(
+            email=self.normalize_email(email)
+        )
+        account.set_password(password)
+        account.save()
+
+    # return account
+
+
+    def create_superuser(self, email, password, **kwargs):
+        account = self.create_user(email, password, **kwargs)
+        account.save()
+
+    # return account
 
 
 # Create your models here.
-class UserCandidate(models.Model):
+class UserCandidate(AbstractBaseUser):
+    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = 'username'
+    objects = BaseAccountManager()
+
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
+    email = models.CharField(max_length=64, verbose_name="email", unique=True, default=1)
+    username = models.CharField(max_length=64, verbose_name="Телефон", unique=True, default=1)
     password = models.CharField(max_length=64, verbose_name="Пароль", default=1234)
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
