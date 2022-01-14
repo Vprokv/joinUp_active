@@ -1,59 +1,12 @@
-from datetime import datetime
-
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import User, UserManager
 
 
-class BaseAccountManager(BaseUserManager):
-    def create_user(self, email, password=None, **kwargs):
-        if not email:
-            raise ValueError('Users must have a valid email address.')
+class UserCandidate(User):
+    isCandidate = models.BooleanField(default=False)
 
-        account = self.model(
-            email=self.normalize_email(email)
-        )
-        account.set_password(password)
-        account.save()
-
-    # return account
-
-
-    def create_superuser(self, email, password, **kwargs):
-        account = self.create_user(email, password, **kwargs)
-        account.save()
-
-    # return account
-
-
-# Create your models here.
-class UserCandidate(AbstractBaseUser):
-    REQUIRED_FIELDS = ['email']
-    USERNAME_FIELD = 'username'
-    objects = BaseAccountManager()
-
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    email = models.CharField(max_length=64, verbose_name="email", unique=True, default=1)
-    username = models.CharField(max_length=64, verbose_name="Телефон", unique=True, default=1)
-    password = models.CharField(max_length=64, verbose_name="Пароль", default=1234)
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return str(self.mobile_phone)
-
-
-class UserEmployee(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    user_name = models.CharField(max_length=64, verbose_name="Логин / телефон (mobile phone)")
-    password = models.CharField(max_length=64, verbose_name="Пароль")
-    status = models.IntegerField(verbose_name="Статус записи")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-
-    def __str__(self):
-        return str(self.user_name)
+    objects = UserManager()
 
 
 class Employee(models.Model):
@@ -68,13 +21,7 @@ class Employee(models.Model):
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-    employee = models.ForeignKey(
-        UserEmployee,
-        verbose_name="Cотрудник",
-        on_delete=models.SET_NULL,
-        related_name='employees',
-        null=True
-    )
+
 
     def __str__(self):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)

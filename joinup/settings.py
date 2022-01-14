@@ -175,4 +175,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = os.environ.get('AUTH_DB', 'auth.user')
+

@@ -31,25 +31,6 @@ services:
     networks:
       - api-server-network
 
-  mobile:
-    build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:9001"
-    restart: always
-    volumes:
-      - .:/code
-    ports:
-      - "9001:9001"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=test
-      - POSTGRES_DB=postgres
-      - AUTH_DB=mainapp.usercandidate
-    links:
-      - postgres:postgres
-    depends_on:
-      - postgres
-    networks:
-      - api-server-network
   nginx:
     image: 1.21.5-alpine
     ports:

@@ -20,7 +20,6 @@ from .serializers import (
     LicensePackSerializer,
     LicenseSerializer,
     UserCandidateSerializer,
-    UserEmployeeSerializer,
     CandidateSerializer,
     AdaptationStatusSerializer,
     AwardSerializer,
@@ -28,7 +27,6 @@ from .serializers import (
     MessageSerializer,
     EmployeeSerializerDetail,
     ICandidateSerializer,
-    UserEmployeeDetail,
     CandidateSerializerDetail,
     UserCandidateDetailSerializer,
     JobDirectorySerializer
@@ -46,7 +44,6 @@ from ..models import (
     Customer,
     License,
     UserCandidate,
-    UserEmployee,
     Candidate,
     AdaptationStatus,
     Award,
@@ -303,42 +300,11 @@ class UserCandidateAPIView(ListCreateAPIView):
     serializer_class = UserCandidateSerializer
     queryset = UserCandidate.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = [
-        'status',
-        'create_date'
-    ]
-    filter_fields = [
-        'status',
-        'create_date'
-    ]
 
 
 class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserCandidateDetailSerializer
     queryset = UserCandidate.objects.all()
-    lookup_field = 'id'
-
-
-class UserEmployeeAPIView(ListCreateAPIView):
-    serializer_class = UserEmployeeSerializer
-    queryset = UserEmployee.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = [
-        'user_name',
-        'status',
-        'create_date'
-    ]
-    filter_fields = [
-        'user_name',
-        'status',
-        'create_date'
-    ]
-
-
-class UserEmployeeDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserEmployeeDetail
-    queryset = UserEmployee.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 
 

@@ -13,7 +13,6 @@ from ..models import (
     Customer,
     License,
     UserCandidate,
-    UserEmployee,
     Candidate,
     AdaptationStatus,
     Award,
@@ -274,29 +273,6 @@ class LicenseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserEmployeeSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(required=False)
-    status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField(required=False)
-
-    class Meta:
-        model = UserEmployee
-        fields = '__all__'
-
-
-class UserEmployeeDetail(serializers.ModelSerializer):
-    user_name = serializers.CharField(required=False)
-    status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField(required=False)
-    employees = EmployeeSerializerList(read_only=True, many=True)
-
-    class Meta:
-        model = UserEmployee
-        fields = '__all__'
-
-
 class AdaptationStatusSerializerDetail(serializers.ModelSerializer):
     class Meta:
         model = AdaptationStatus
@@ -365,11 +341,6 @@ class CandidateSerializerList(serializers.ModelSerializer):
 
 
 class UserCandidateSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField(required=True)
-    password = serializers.CharField(required=True)
-    status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField(required=False)
 
     class Meta:
         model = UserCandidate
@@ -377,12 +348,6 @@ class UserCandidateSerializer(serializers.ModelSerializer):
 
 
 class UserCandidateDetailSerializer(serializers.ModelSerializer):
-    mobile_phone = serializers.CharField(required=True)
-    password = serializers.CharField(required=True)
-    status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField()
-    candidates = CandidateSerializerList(read_only=True, many=True)
 
     class Meta:
         model = UserCandidate

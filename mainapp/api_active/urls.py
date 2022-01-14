@@ -33,8 +33,6 @@ from .api_views import (
     LicenseDetailAPIView,
     UserCandidateAPIView,
     UserCandidateDetailAPIView,
-    UserEmployeeAPIView,
-    UserEmployeeDetailAPIView,
     CandidateAPIView,
     CandidateDetailAPIView,
     AdaptationStatusAPIView,
