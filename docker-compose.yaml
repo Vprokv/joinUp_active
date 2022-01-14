@@ -42,7 +42,6 @@ services:
       - ./logs/nginx:/var/log/nginx
     depends_on:
       - web
-      - mobile
 
 networks:
   api-server-network:
