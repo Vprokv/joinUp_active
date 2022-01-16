@@ -24,6 +24,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=test
       - POSTGRES_DB=postgres
+      - AUTH_TABLE=employe
     links:
       - postgres:postgres
     depends_on:
@@ -32,14 +33,19 @@ services:
       - api-server-network
 
   nginx:
-    image: 1.21.5-alpine
+    image: nginx:1.21.5-alpine
+    restart: always
     ports:
       - "80:80"
 #        - "443:443" включить если появиться https
     # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
     volumes:
-      - ./conf:/etc/nginx/conf.d
+      - ./conf:/etc/nginx
+      - ../uploads:/uploads
+      - ../joinUs/build:/front
       - ./logs/nginx:/var/log/nginx
+    networks:
+      - api-server-network
     depends_on:
       - web
 
