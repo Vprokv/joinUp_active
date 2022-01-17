@@ -42,7 +42,7 @@ services:
     volumes:
       - ./conf:/etc/nginx
       - ../uploads:/uploads
-      - ../joinUs/build:/front
+      - ../JoinUs/build:/front
       - ./logs/nginx:/var/log/nginx
     networks:
       - api-server-network
