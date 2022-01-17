@@ -128,7 +128,7 @@ class Program(models.Model):
 
 class Candidate(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    id_customer = models.IntegerField(verbose_name="id заказчика")
+    id_customer = models.IntegerField(verbose_name="id заказчика", null=True)
     last_name = models.CharField(max_length=64, verbose_name="Фамилия")
     first_name = models.CharField(max_length=64, verbose_name="Имя")
     middle_name = models.CharField(max_length=64, verbose_name="Отчество")
@@ -136,10 +136,10 @@ class Candidate(models.Model):
     salary = models.IntegerField(verbose_name="ЗП", null=True)
     mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
     email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
-    status = models.IntegerField(verbose_name="Статус записи")
+    # status = models.IntegerField(verbose_name="Статус записи", null=True)
     create_date = models.DateTimeField(verbose_name="Дата создания")
     release_date = models.DateField(verbose_name="Дата выходa")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)
     candidate = models.ForeignKey(
         UserCandidate,
         verbose_name="Кандидат",
