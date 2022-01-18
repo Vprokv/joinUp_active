@@ -132,7 +132,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class ProgramSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
+    create_date = serializers.DateTimeField(required=False)
     tier = serializers.IntegerField(required=False)
     description = serializers.CharField(required=False)
 
@@ -186,7 +186,9 @@ class CustomerSerializerList(serializers.ModelSerializer):
 
 class ProgramDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
+    program_name = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)
+    create_date = serializers.DateTimeField(required=False)
     levels_detail = LevelListSerializer(many=True, read_only=True, source='levels')
     contacts_detail = ContactSerializerList(read_only=True, many=True, source='contact')
     documents_detail = DocumentSerializerList(many=True, read_only=True, source='documents')
