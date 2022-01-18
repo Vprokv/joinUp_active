@@ -58,7 +58,7 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    blocks = BlockSerializer(many=True)
+    blocks = BlockSerializer(many=True, read_only=True)
 
     class Meta:
         model = AdaptationStage
