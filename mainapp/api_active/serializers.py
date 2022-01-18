@@ -186,8 +186,6 @@ class CustomerSerializerList(serializers.ModelSerializer):
 
 class ProgramDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
-    program_name = serializers.CharField(required=False)
-    description = serializers.CharField(required=False)
     create_date = serializers.DateTimeField(required=False)
     levels_detail = LevelListSerializer(many=True, read_only=True, source='levels')
     contacts_detail = ContactSerializerList(read_only=True, many=True, source='contact')

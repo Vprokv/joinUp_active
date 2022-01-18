@@ -99,8 +99,8 @@ class Level(models.Model):
 
 class Program(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    program_name = models.CharField(max_length=128, verbose_name="Наименование программы", null=True)
-    description = models.CharField(max_length=256, verbose_name="Cодержание программы", null=True)
+    program_name = models.CharField(max_length=128, verbose_name="Наименование программы")
+    description = models.CharField(max_length=256, verbose_name="Cодержание программы")
     duration_day = models.IntegerField(
         verbose_name="Длительность адаптации",
         validators=[MinValueValidator(1)],
