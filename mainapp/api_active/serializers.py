@@ -287,7 +287,7 @@ class CandidateSerializer(serializers.ModelSerializer):
     post = serializers.CharField(required=False)
     mobile_phone = serializers.CharField(required=False)
     email = serializers.CharField(required=False)
-    status = serializers.IntegerField(required=False)
+    # status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
     program_details = ProgramDetailForCandidateSerializer(many=True, read_only=True, source='program')
@@ -304,11 +304,11 @@ class CandidateSerializer(serializers.ModelSerializer):
             'salary',
             'mobile_phone',
             'email',
-            'status',
+            # 'status',
             'create_date',
             'release_date',
             'id_employee',
-            'candidate',
+            # 'candidate',
             'program',
             'id_customer',
             'program_details',

@@ -86,7 +86,7 @@ class EmployeeAPIView(ListCreateAPIView):
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
     filter_backends = [SearchFilter]
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     search_fields = [
         'last_name',
         'first_name',
