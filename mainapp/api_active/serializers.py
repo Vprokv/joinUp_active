@@ -58,7 +58,7 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    blocks = BlockSerializer(many=True)
+    blocks = BlockSerializer(many=True, read_only=True)
 
     class Meta:
         model = AdaptationStage
@@ -132,7 +132,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class ProgramSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
+    create_date = serializers.DateTimeField(required=False)
     tier = serializers.IntegerField(required=False)
     description = serializers.CharField(required=False)
 
@@ -186,7 +186,7 @@ class CustomerSerializerList(serializers.ModelSerializer):
 
 class ProgramDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
+    create_date = serializers.DateTimeField(required=False)
     levels_detail = LevelListSerializer(many=True, read_only=True, source='levels')
     contacts_detail = ContactSerializerList(read_only=True, many=True, source='contact')
     documents_detail = DocumentSerializerList(many=True, read_only=True, source='documents')
@@ -287,7 +287,7 @@ class CandidateSerializer(serializers.ModelSerializer):
     post = serializers.CharField(required=False)
     mobile_phone = serializers.CharField(required=False)
     email = serializers.CharField(required=False)
-    status = serializers.IntegerField(required=False)
+    # status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
     program_details = ProgramDetailForCandidateSerializer(many=True, read_only=True, source='program')
@@ -304,11 +304,11 @@ class CandidateSerializer(serializers.ModelSerializer):
             'salary',
             'mobile_phone',
             'email',
-            'status',
+            # 'status',
             'create_date',
             'release_date',
             'id_employee',
-            'candidate',
+            # 'candidate',
             'program',
             'id_customer',
             'program_details',
