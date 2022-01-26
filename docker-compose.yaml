@@ -41,7 +41,7 @@ services:
     # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
     volumes:
       - ./conf:/etc/nginx
-      - ../uploads:/uploads
+      - ../files:/files
       - ../JoinUs/build:/front
       - ./logs/nginx:/var/log/nginx
     networks:
