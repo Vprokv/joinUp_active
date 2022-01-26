@@ -178,12 +178,12 @@ class AdaptationStage(models.Model):
 
 class Block(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
-    description = models.CharField(max_length=256, verbose_name="Cодержание блока")
-    tier = models.IntegerField(verbose_name="Номер по порядку")
-    status = models.IntegerField(verbose_name="Статус блока")
-    create_date = models.DateTimeField(verbose_name="Дата создания")
-    id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    # block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
+    # description = models.CharField(max_length=256, verbose_name="Cодержание блока")
+    # tier = models.IntegerField(verbose_name="Номер по порядку")
+    # status = models.IntegerField(verbose_name="Статус блока")
+    # create_date = models.DateTimeField(verbose_name="Дата создания")
+    # id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     adaptationStage = models.ForeignKey(
         AdaptationStage,
         verbose_name="Этап",
@@ -192,6 +192,7 @@ class Block(models.Model):
         default=1,
         null=True
     )
+    blocks = models.JSONField(null=True)
 
     def __str__(self):
         return self.block_name
@@ -242,10 +243,25 @@ class AdaptationStatus(models.Model):
         return str(self.id_stage)
 
 
+class CommentToStage(models.Model):
+    candidate = models.ForeignKey(
+        Candidate,
+        verbose_name="Кандидат",
+        on_delete=models.SET_NULL,
+        related_name='comment',
+        null=True
+    )
+    comment = models.CharField(max_length=256, verbose_name="Текст комментария")
+    id_stage = models.IntegerField(verbose_name="Ссылка на пройденный этап", null=True)
+
+    def __str__(self):
+        return str(self.id_stage)
+
+
 class Award(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     award_name = models.CharField(max_length=128, verbose_name="Название награды")
-    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация")
+    illustration = models.ImageField(max_length=256, verbose_name="Иллюстрация")
     tier = models.IntegerField(verbose_name="Номер по порядку")
 
     def __str__(self):

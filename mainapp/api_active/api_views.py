@@ -29,7 +29,7 @@ from .serializers import (
     ICandidateSerializer,
     CandidateSerializerDetail,
     UserCandidateDetailSerializer,
-    JobDirectorySerializer
+    JobDirectorySerializer, CommentToStageSerializer
 )
 from ..models import (
     Program,
@@ -49,7 +49,7 @@ from ..models import (
     Award,
     AwardCandidate,
     Message,
-    JobDirectoryCatalogs
+    JobDirectoryCatalogs, CommentToStage
 )
 
 
@@ -122,7 +122,7 @@ class LevelDetailAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
-class AdaptationStageAPIView(ListCreateAPIView):
+class AdaptationStageAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = AdaptationStageSerializer
     queryset = AdaptationStage.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
@@ -148,15 +148,15 @@ class BlockPIView(ListCreateAPIView):
     serializer_class = BlockSerializer
     queryset = Block.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = [
-        'status',
-        'id_stage',
-        'create_date'
-    ]
-    filter_fields = [
-        'status',
-        'create_date'
-    ]
+    # search_fields = [
+    #     'status',
+    #     'id_stage',
+    #     'create_date'
+    # ]
+    # filter_fields = [
+    #     'status',
+    #     'create_date'
+    # ]
 
 
 class BlockDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -368,6 +368,13 @@ class ICandidateAPIView(ListAPIView):
 class AdaptationStatusAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = AdaptationStatusSerializer
     queryset = AdaptationStatus.objects.all()
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    lookup_field = 'id'
+
+
+class CommentToStageAPIView(ListCreateAPIView, RetrieveUpdateDestroyAPIView):
+    serializer_class = CommentToStageSerializer
+    queryset = CommentToStage.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
     lookup_field = 'id'
 

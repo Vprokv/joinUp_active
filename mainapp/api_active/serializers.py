@@ -18,17 +18,13 @@ from ..models import (
     Award,
     AwardCandidate,
     Message,
-    JobDirectoryCatalogs
+    JobDirectoryCatalogs,
+CommentToStage
 )
 
 
 class BlockSerializer(serializers.ModelSerializer):
-    block_name = serializers.CharField()
-    description = serializers.CharField(required=False)
-    tier = serializers.IntegerField(required=False)
-    status = serializers.IntegerField(required=False)
-    create_date = serializers.DateTimeField()
-    id_employee = serializers.IntegerField(required=False)
+    blocks = serializers.JSONField(required=False)
 
     class Meta:
         model = Block
@@ -279,6 +275,12 @@ class AdaptationStatusSerializerDetail(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CommentToStageSerializerDetail(serializers.ModelSerializer):
+    class Meta:
+        model = CommentToStage
+        fields = '__all__'
+
+
 class CandidateSerializer(serializers.ModelSerializer):
     id_customer = serializers.IntegerField(required=False)
     last_name = serializers.CharField()
@@ -292,6 +294,7 @@ class CandidateSerializer(serializers.ModelSerializer):
     id_employee = serializers.IntegerField(required=False)
     program_details = ProgramDetailForCandidateSerializer(many=True, read_only=True, source='program')
     adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
+    comment = CommentToStageSerializerDetail(many=True, read_only=True)
 
     class Meta:
         model = Candidate
@@ -312,7 +315,8 @@ class CandidateSerializer(serializers.ModelSerializer):
             'program',
             'id_customer',
             'program_details',
-            'adaptation_status'
+            'adaptation_status',
+            'comment'
         )
 
 
@@ -326,6 +330,7 @@ class CandidateSerializerDetail(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
     adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
+    comment = CommentToStageSerializerDetail(many=True, read_only=True)
 
     class Meta:
         model = Candidate
@@ -368,6 +373,15 @@ class AdaptationStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AdaptationStatus
+        fields = '__all__'
+
+
+class CommentToStageSerializer(serializers.ModelSerializer):
+    id_stage = serializers.IntegerField()
+    comment = serializers.CharField(required=False)
+
+    class Meta:
+        model = CommentToStage
         fields = '__all__'
 
 

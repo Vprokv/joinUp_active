@@ -41,7 +41,7 @@ from .api_views import (
     MessageAPIView,
     CandidateAPIViewFilter,
     JobDirectoryAPIView,
-    JobDirectoryDetailAPIView
+    JobDirectoryDetailAPIView, CommentToStageAPIView
 )
 
 urlpatterns = [
@@ -54,8 +54,9 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 
-    path('candidate/', CandidateAPIView.as_view(), name='candidate employee'), #any search!
-    path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'), #search and filter
+    path('candidate/', CandidateAPIView.as_view(), name='candidate employee'),  # any search!
+    path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'),
+    # search and filter
     # /api-active/candidate/filter/?post=разработчик&first_name=vv&status=1
     # /api-active/candidate/filter/?search=разработчик&first_name=vv&status=1
     path('candidate/<str:id>/', CandidateDetailAPIView.as_view(), name='candidate employee detail'),
@@ -93,14 +94,17 @@ urlpatterns = [
     path('adaptationstatus/', AdaptationStatusAPIView.as_view(), name='adaptation status'),
     path('adaptationstatus/<str:id>/', AdaptationStatusAPIView.as_view(), name='adaptation status detail'),
 
+    path('comment/', CommentToStageAPIView.as_view(), name='adaptation stage comment'),
+    path('comment/<str:id>/', CommentToStageAPIView.as_view(), name='adaptation stage comment'),
+
     # path('licensepack/', LicensePackAPIView.as_view(), name='license pack'),
     # path('licensepack/<str:id>/', LicensePackDetailAPIView.as_view(), name='license pack detail'),
     #
     # path('license/', LicenseAPIView.as_view(), name='license pack'),
     # path('licensepaclicensek/<str:id>/', LicenseDetailAPIView.as_view(), name='license pack detail'),
 
-    # path('award/', AwardAPIView.as_view(), name='award '),
-    # path('award/<str:id>/', AwardAPIView.as_view(), name='award detail'),
+    path('award/', AwardAPIView.as_view(), name='award '),
+    path('award/<str:id>/', AwardAPIView.as_view(), name='award detail'),
     #
     # path('awardcandidate/', AwardCandidateAPIView.as_view(), name='award candidate '),
     # path('awardcandidate/<str:id>/', AwardCandidateAPIView.as_view(), name='award candidate detail'),
