@@ -1,12 +1,8 @@
 import django_filters
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, APi
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
-from django.views.generic import TemplateView
-from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
-from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (
     ProgramSerializer,

@@ -38,7 +38,7 @@ class Contact(models.Model):
     role = models.CharField(max_length=64, verbose_name="Роль")
     tier = models.IntegerField(verbose_name="Номер по порядку")
     status = models.IntegerField(verbose_name="Статус контакта")
-    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)")
+    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)", null=True, blank=True)
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
@@ -87,7 +87,7 @@ class Document(models.Model):
 class Level(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     level_name = models.CharField(max_length=128, verbose_name="Наименование уровня")
-    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация")
+    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
     tier = models.IntegerField(verbose_name="Номер по порядку")
     status = models.IntegerField(verbose_name="Статус уровня")
     create_date = models.DateTimeField(verbose_name="Дата создания")
@@ -156,7 +156,7 @@ class Candidate(models.Model):
 class AdaptationStage(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     stage_name = models.CharField(max_length=128, verbose_name="Наименование этапа")
-    illustration = models.CharField(max_length=256, verbose_name="Ссылка на иллюстрацию")
+    illustration = models.CharField(max_length=256, verbose_name="Ссылка на иллюстрацию", null=True, blank=True)
     tier = models.IntegerField(verbose_name="Номер по порядку")
     point = models.IntegerField(verbose_name="Количество баллов")
     status = models.IntegerField(verbose_name="Статус этапа")

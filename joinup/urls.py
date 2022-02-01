@@ -17,12 +17,19 @@ from django.contrib import admin
 from django.urls import path, include
 from .yasg import urlpatterns as doc_urls
 
+from django.conf.urls.static import static
+from django.conf import settings
+# from mainapp.api_active.api_views import upload
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('mainapp.api.urls')),
     path('api-active/', include('mainapp.api_active.urls')),
+    # path('upload/', upload, name='upload'),
 
     # path('api-auth/', include('rest_framework.urls'))
 ]
 
 urlpatterns += doc_urls
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
