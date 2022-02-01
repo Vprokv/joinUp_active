@@ -1,8 +1,11 @@
 import django_filters
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, APi
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import PageNumberPagination
+from django.views.generic import TemplateView
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import (
@@ -334,12 +337,23 @@ class CandidateAPIViewFilter(ListCreateAPIView):
     filterset_class = CandidateFilter
     filter_backends = [SearchFilter, DjangoFilterBackend]
 
+    search_fields = [
+        'last_name',
+        'first_name',
+        'middle_name',
+        'post',
+        # 'status',
+        'create_date',
+        'mobile_phone'
+    ]
+
 
 class CandidateAPIView(ListCreateAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
     pagination_class = PaginationBaseClass
-    filter_backends = [SearchFilter]
+    filterset_class = CandidateFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
     search_fields = [
         'last_name',
         'first_name',
@@ -409,3 +423,11 @@ class JobDirectoryDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = JobDirectorySerializer
     queryset = JobDirectoryCatalogs.objects.all()
     lookup_field = 'id'
+
+
+# def upload(request):
+#     if request.method == 'POST':
+#         uploaded_file = request.FILES['document']
+#         fs = FileSystemStorage()
+#         fs.save(uploaded_file.name, uploaded_file)
+#         return request.name

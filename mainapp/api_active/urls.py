@@ -41,7 +41,8 @@ from .api_views import (
     MessageAPIView,
     CandidateAPIViewFilter,
     JobDirectoryAPIView,
-    JobDirectoryDetailAPIView, CommentToStageAPIView
+    JobDirectoryDetailAPIView, CommentToStageAPIView,
+    # upload
 )
 
 urlpatterns = [
@@ -53,6 +54,7 @@ urlpatterns = [
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+
 
     path('candidate/', CandidateAPIView.as_view(), name='candidate employee'),  # any search!
     path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'),
