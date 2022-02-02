@@ -25,11 +25,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('mainapp.api.urls')),
     path('api-active/', include('mainapp.api_active.urls')),
-    # path('upload/', upload, name='upload'),
 
     # path('api-auth/', include('rest_framework.urls'))
 ]
 
 urlpatterns += doc_urls
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

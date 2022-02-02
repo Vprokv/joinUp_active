@@ -22,7 +22,6 @@ class Employee(models.Model):
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
-
     def __str__(self):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)
 
@@ -38,7 +37,7 @@ class Contact(models.Model):
     role = models.CharField(max_length=64, verbose_name="Роль")
     tier = models.IntegerField(verbose_name="Номер по порядку")
     status = models.IntegerField(verbose_name="Статус контакта")
-    illustration_link = models.URLField(verbose_name="Ccсылка на иллюстрацию(аватарку)", null=True, blank=True)
+    illustration_link = models.CharField(max_length=256, verbose_name="Ccсылка на иллюстрацию(аватарку)", null=True, blank=True)
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
@@ -261,7 +260,7 @@ class CommentToStage(models.Model):
 class Award(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     award_name = models.CharField(max_length=128, verbose_name="Название награды")
-    illustration = models.ImageField(max_length=256, verbose_name="Иллюстрация")
+    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация")
     tier = models.IntegerField(verbose_name="Номер по порядку")
 
     def __str__(self):
@@ -293,3 +292,9 @@ class Message(models.Model):
 class JobDirectoryCatalogs(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     directory = models.CharField(max_length=512, verbose_name="Должность", db_index=True)
+
+
+class File(models.Model):
+    file = models.FileField(blank=False, null=False)
+    remark = models.CharField(max_length=512, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)

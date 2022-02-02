@@ -19,7 +19,8 @@ from ..models import (
     AwardCandidate,
     Message,
     JobDirectoryCatalogs,
-CommentToStage
+    CommentToStage,
+    File
 )
 
 
@@ -346,14 +347,12 @@ class CandidateSerializerList(serializers.ModelSerializer):
 
 
 class UserCandidateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = UserCandidate
         fields = '__all__'
 
 
 class UserCandidateDetailSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = UserCandidate
         fields = '__all__'
@@ -423,3 +422,11 @@ class JobDirectorySerializer(serializers.ModelSerializer):
     class Meta:
         model = JobDirectoryCatalogs
         fields = '__all__'
+
+
+class FileSerializer(serializers.ModelSerializer):
+    file = serializers.FileField()
+
+    class Meta:
+        model = File
+        fields = ('file', 'remark', 'timestamp')
