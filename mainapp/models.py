@@ -21,6 +21,7 @@ class Employee(models.Model):
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
+    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
 
     def __str__(self):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)
@@ -108,6 +109,7 @@ class Program(models.Model):
     tier = models.IntegerField(verbose_name="Номер по порядку", validators=[MinValueValidator(1)], default=1)
     status = models.IntegerField(verbose_name="Статус программы", default=1)
     create_date = models.DateTimeField(verbose_name="Дата создания")
+    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
     employee = models.ForeignKey(
         Employee,
         verbose_name="Сотрудник создавший запись",
@@ -139,6 +141,7 @@ class Candidate(models.Model):
     create_date = models.DateTimeField(verbose_name="Дата создания")
     release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)
+    illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
     candidate = models.ForeignKey(
         UserCandidate,
         verbose_name="Кандидат",

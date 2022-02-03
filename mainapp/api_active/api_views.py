@@ -328,7 +328,8 @@ class CandidateFilter(django_filters.FilterSet):
             'start_before',
             'start_after',
             'create_date',
-            'mobile_phone'
+            'mobile_phone',
+            # 'illustration'
         ]
 
 

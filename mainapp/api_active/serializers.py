@@ -34,7 +34,7 @@ class BlockSerializer(serializers.ModelSerializer):
 
 class AdaptationStageDetailSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
-    illustration = serializers.ImageField(required=False)
+    illustration = serializers.CharField(required=False)
     tier = serializers.IntegerField(required=False)
     point = serializers.IntegerField(required=False)
     status = serializers.IntegerField(required=False)
@@ -49,7 +49,7 @@ class AdaptationStageDetailSerializer(serializers.ModelSerializer):
 
 class AdaptationStageSerializer(serializers.ModelSerializer):
     stage_name = serializers.CharField()
-    illustration = serializers.ImageField(required=False)
+    illustration = serializers.CharField(required=False)
     tier = serializers.IntegerField(required=False)
     point = serializers.IntegerField(required=False)
     status = serializers.IntegerField(required=False)
@@ -64,7 +64,7 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
 
 class LevelSerializer(serializers.ModelSerializer):
     level_name = serializers.CharField()
-    illustration = serializers.ImageField(required=False)
+    illustration = serializers.CharField(required=False)
     tier = serializers.IntegerField(required=False)
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
@@ -92,7 +92,7 @@ class ContactSerializer(serializers.ModelSerializer):
     role = serializers.CharField(required=False)
     tier = serializers.IntegerField(required=False)
     status = serializers.IntegerField(required=False)
-    illustration_link = serializers.URLField(required=False)
+    illustration_link = serializers.CharField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
 
@@ -132,6 +132,7 @@ class ProgramSerializer(serializers.ModelSerializer):
     create_date = serializers.DateTimeField(required=False)
     tier = serializers.IntegerField(required=False)
     description = serializers.CharField(required=False)
+    # illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Program
@@ -189,6 +190,7 @@ class ProgramDetailSerializer(serializers.ModelSerializer):
     documents_detail = DocumentSerializerList(many=True, read_only=True, source='documents')
     goals_detail = GoalsSerializerList(many=True, read_only=True, source='goals')
     customer_detail = CustomerSerializerList(read_only=True, many=True, source='customer')
+    illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Program
@@ -214,6 +216,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField(required=False)
     id_employee = serializers.IntegerField(required=False)
+    illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Employee
@@ -231,6 +234,7 @@ class EmployeeSerializerDetail(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
+    illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Employee
@@ -296,6 +300,7 @@ class CandidateSerializer(serializers.ModelSerializer):
     program_details = ProgramDetailForCandidateSerializer(many=True, read_only=True, source='program')
     adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
     comment = CommentToStageSerializerDetail(many=True, read_only=True)
+    illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Candidate
@@ -317,7 +322,8 @@ class CandidateSerializer(serializers.ModelSerializer):
             'id_customer',
             'program_details',
             'adaptation_status',
-            'comment'
+            'comment',
+            'illustration'
         )
 
 
@@ -332,6 +338,7 @@ class CandidateSerializerDetail(serializers.ModelSerializer):
     program_details = ProgramDetailSerializer(many=True, read_only=True, source='program')
     adaptation_status = AdaptationStatusSerializerDetail(many=True, read_only=True)
     comment = CommentToStageSerializerDetail(many=True, read_only=True)
+    illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Candidate
