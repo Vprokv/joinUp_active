@@ -25,11 +25,18 @@ from ..models import (
 
 
 class BlockSerializer(serializers.ModelSerializer):
-    blocks = serializers.JSONField(required=False)
+    json = serializers.JSONField(required=False)
 
     class Meta:
         model = Block
         fields = '__all__'
+
+
+class BlockListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Block
+        fields = ['json']
 
 
 class AdaptationStageDetailSerializer(serializers.ModelSerializer):
@@ -40,7 +47,7 @@ class AdaptationStageDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    blocks = BlockSerializer(many=True)
+    block = BlockListSerializer(read_only=True)
 
     class Meta:
         model = AdaptationStage
@@ -55,7 +62,7 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    blocks = BlockSerializer(many=True, read_only=True)
+    block = BlockListSerializer(read_only=True)
 
     class Meta:
         model = AdaptationStage
