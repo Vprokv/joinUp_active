@@ -36,7 +36,7 @@ class BlockListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Block
-        fields = ['json']
+        fields = ['id', 'json']
 
 
 class AdaptationStageDetailSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class AdaptationStageDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    block = BlockListSerializer(read_only=True)
+    blocks = BlockListSerializer(many=True, read_only=True)
 
     class Meta:
         model = AdaptationStage
@@ -62,7 +62,7 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    block = BlockListSerializer(read_only=True)
+    # blocks = BlockListSerializer(many=True, read_only=True)
 
     class Meta:
         model = AdaptationStage
