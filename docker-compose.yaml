@@ -44,7 +44,7 @@ services:
       - ./conf:/etc/nginx
       - ../files:/files
       - ../JoinUs/build:/front
-      - ./logs/nginx:/var/log/nginx
+      - ../logs_nginx:/var/log/nginx
     networks:
       - api-server-network
     depends_on:
