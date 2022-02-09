@@ -167,7 +167,7 @@ class BlockPIView(ListCreateAPIView):
 class BlockDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = BlockSerializer
     queryset = Block.objects.all()
-    lookup_field = 'adaptationStage'
+    lookup_field = 'id'
 
 
 class GoalAPIView(ListCreateAPIView):
