@@ -36,7 +36,7 @@ class BlockListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Block
-        fields = ['id', 'json']
+        fields = ['json']
 
 
 class AdaptationStageDetailSerializer(serializers.ModelSerializer):

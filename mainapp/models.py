@@ -137,7 +137,7 @@ class Candidate(models.Model):
     salary = models.IntegerField(verbose_name="ЗП", null=True)
     mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
     email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
-    # status = models.IntegerField(verbose_name="Статус записи", null=True)
+    status = models.IntegerField(verbose_name="Статус записи", null=True)
     create_date = models.DateTimeField(verbose_name="Дата создания")
     release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)
@@ -179,20 +179,18 @@ class AdaptationStage(models.Model):
 
 
 class Block(models.Model):
-    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
+    # id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     # block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
     # description = models.CharField(max_length=256, verbose_name="Cодержание блока")
     # tier = models.IntegerField(verbose_name="Номер по порядку")
     # status = models.IntegerField(verbose_name="Статус блока")
     # create_date = models.DateTimeField(verbose_name="Дата создания")
     # id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
-    adaptationStage = models.ForeignKey(
+    adaptationStage = models.OneToOneField(
         AdaptationStage,
         verbose_name="Этап",
-        on_delete=models.SET_NULL,
-        related_name='blocks',
-        default=1,
-        null=True
+        on_delete=models.CASCADE,
+        primary_key=True
     )
     json = models.JSONField(null=True)
 

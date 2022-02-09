@@ -78,7 +78,7 @@ urlpatterns = [
     path('adaptationstage/<str:id>/', AdaptationStageDetailAPIView.as_view(), name='adaptation stage detail'),
 
     path('adaptationblock/', BlockPIView.as_view(), name='block'),
-    path('adaptationblock/<str:id>/', BlockDetailAPIView.as_view(), name='block detail'),
+    path('adaptationblock/<str:adaptationStage>/', BlockDetailAPIView.as_view(), name='block detail'),
 
     path('adaptationbgoal/', GoalAPIView.as_view(), name='goal'),
     path('adaptationbgoal/<str:id>/', GoalDetailAPIView.as_view(), name='goal detail'),
