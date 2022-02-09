@@ -324,7 +324,7 @@ class CandidateFilter(django_filters.FilterSet):
             'first_name',
             'middle_name',
             'post',
-            # 'status',
+            'status',
             'start_before',
             'start_after',
             'create_date',
@@ -345,7 +345,7 @@ class CandidateAPIViewFilter(ListCreateAPIView):
         'first_name',
         'middle_name',
         'post',
-        # 'status',
+        'status',
         'create_date',
         'mobile_phone'
     ]
