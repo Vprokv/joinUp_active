@@ -47,7 +47,7 @@ class AdaptationStageDetailSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    blocks = BlockListSerializer(many=True, read_only=True)
+    block = BlockListSerializer(read_only=True)
 
     class Meta:
         model = AdaptationStage
@@ -62,7 +62,7 @@ class AdaptationStageSerializer(serializers.ModelSerializer):
     status = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
-    # blocks = BlockListSerializer(many=True, read_only=True)
+    block = BlockListSerializer(read_only=True)
 
     class Meta:
         model = AdaptationStage
