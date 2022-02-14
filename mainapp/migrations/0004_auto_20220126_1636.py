@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='block',
-            name='blocks',
+            name='json',
             field=models.JSONField(null=True),
         ),
         migrations.AlterField(

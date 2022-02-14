@@ -75,7 +75,7 @@ class Goal(models.Model):
 class Document(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
-    document_link = models.URLField(verbose_name="Ccылка на файл")
+    document_link = models.CharField(max_length=256, verbose_name="Ccылка на файл", null=True, blank=True)
     tier = models.IntegerField(verbose_name="Номер по порядку")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
@@ -137,7 +137,7 @@ class Candidate(models.Model):
     salary = models.IntegerField(verbose_name="ЗП", null=True)
     mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
     email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
-    # status = models.IntegerField(verbose_name="Статус записи", null=True)
+    status = models.IntegerField(verbose_name="Статус записи", null=True)
     create_date = models.DateTimeField(verbose_name="Дата создания")
     release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)

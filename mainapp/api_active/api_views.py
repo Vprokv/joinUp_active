@@ -324,7 +324,7 @@ class CandidateFilter(django_filters.FilterSet):
             'first_name',
             'middle_name',
             'post',
-            # 'status',
+            'status',
             'start_before',
             'start_after',
             'create_date',
@@ -345,7 +345,7 @@ class CandidateAPIViewFilter(ListCreateAPIView):
         'first_name',
         'middle_name',
         'post',
-        # 'status',
+        'status',
         'create_date',
         'mobile_phone'
     ]
@@ -446,3 +446,16 @@ class FileView(APIView):
             return Response(file_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AdaptationAPIView(APIView):
+    serializer_class = AdaptationStatusSerializer
+    queryset = AdaptationStatus.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        adaptation_status = AdaptationStatusSerializer(data=request.data)
+        stages = AdaptationProgramAPIView.objects.filter()
+        print(stages, 'stages')
+        if adaptation_status.is_valid():
+            adaptation_status.save()
+            return Response(adaptation_status.data, status=status.HTTP_201_CREATED)
