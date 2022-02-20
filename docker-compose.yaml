@@ -49,6 +49,18 @@ services:
       - api-server-network
     depends_on:
       - web
+  redis:
+    image: "bitnami/redis:5.0.14"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../.database/redis/data:/var/lib/redis/data
+    networks:
+      - api-server-network
+    container_name: redis
+    restart: unless-stopped
+    environment:
+      - REDIS_PASSWORD=у
 
 networks:
   api-server-network:

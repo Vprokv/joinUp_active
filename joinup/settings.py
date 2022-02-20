@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'djoser',
     # 'rest_framework_jwt',
     'rest_framework_simplejwt',
+    'sms_auth',
+    'sms_auth.providers.smsaero'
 ]
 
 REST_FRAMEWORK = {
@@ -182,4 +184,18 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SMS_AUTH_SETTINGS = {
+    "SMS_CELERY_FILE_NAME": "run_celery",  # your system celery file,
+    "SMS_AUTH_SUCCESS_KEY": "jwt_token",  # property from user model
+    "SMS_AUTH_PROVIDER_FROM": "ex: +7542222222",  # sms signature
 
+    # If another provider
+    "SMS_AUTH_PROVIDER_LOGIN": "SMS provider login",
+    "SMS_AUTH_PROVIDER_PASSWORD": "SMS provider password"
+}
+
+BROKER_URL = 'redis://dockerRedis@redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

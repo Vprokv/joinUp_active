@@ -1,7 +1,7 @@
 import django_filters
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.filters import SearchFilter
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, BaseFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -312,19 +312,48 @@ class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = UserCandidate.objects.all()
     lookup_field = 'id'
 
+class StatusesInFilterBackend(BaseFilterBackend):
+    # statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
 
-class CandidateFilter(django_filters.FilterSet):
-    start_before = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="lte")
-    start_after = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="gte")
+    def filter_queryset(self, request, queryset, view):
+        statuses = request.query_params.get('statuses')
+        if statuses:
+            statuses = statuses.split(",")
+            return queryset.filter(status__in=statuses)
+            return queryset
 
     class Meta:
         model = Candidate
+        ordering = ['-id']
         fields = [
             'last_name',
             'first_name',
             'middle_name',
             'post',
             'status',
+            # 'statuses',
+            'start_before',
+            'start_after',
+            'create_date',
+            'mobile_phone',
+            # 'illustration'
+        ]
+
+class CandidateFilter(django_filters.FilterSet):
+    start_before = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="lte")
+    start_after = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="gte")
+    statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
+
+    class Meta:
+        model = Candidate
+        ordering = ['-id']
+        fields = [
+            'last_name',
+            'first_name',
+            'middle_name',
+            'post',
+            'status',
+            # 'statuses',
             'start_before',
             'start_after',
             'create_date',
@@ -356,7 +385,11 @@ class CandidateAPIView(ListCreateAPIView):
     queryset = Candidate.objects.all()
     pagination_class = PaginationBaseClass
     filterset_class = CandidateFilter
-    filter_backends = [SearchFilter, DjangoFilterBackend]
+    filter_backends = [SearchFilter, DjangoFilterBackend, StatusesInFilterBackend]
+    # filter_fields = {
+    #     'status': ["in", "exact"]  # icontains ,exact, gte, lte, in
+    #     # if you want to add more fields, you can
+    # }
     search_fields = [
         'last_name',
         'first_name',

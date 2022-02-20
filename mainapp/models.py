@@ -117,11 +117,11 @@ class Program(models.Model):
         related_name='programs',
         null=True
     )
-    contact = models.ManyToManyField(Contact, verbose_name="Контакты", null=True, blank=True)
-    customer = models.ManyToManyField(Customer, verbose_name="Заказчик", null=True, blank=True)
-    levels = models.ManyToManyField(Level, verbose_name="Уровни", null=True, blank=True)
-    documents = models.ManyToManyField(Document, verbose_name="Документы", null=True, blank=True)
-    goals = models.ManyToManyField(Goal, verbose_name="Цели", null=True, blank=True)
+    contact = models.ManyToManyField(Contact, verbose_name="Контакты", blank=True)
+    customer = models.ManyToManyField(Customer, verbose_name="Заказчик",  blank=True)
+    levels = models.ManyToManyField(Level, verbose_name="Уровни", blank=True)
+    documents = models.ManyToManyField(Document, verbose_name="Документы", blank=True)
+    goals = models.ManyToManyField(Goal, verbose_name="Цели", blank=True)
 
     def __str__(self):
         return self.program_name
@@ -149,7 +149,7 @@ class Candidate(models.Model):
         related_name='candidates',
         null=True
     )
-    program = models.ManyToManyField(Program, verbose_name="Программа", null=True)
+    program = models.ManyToManyField(Program, verbose_name="Программа")
 
     def __str__(self):
         return "Кандидат: {} {}".format(self.last_name, self.first_name)
