@@ -312,6 +312,7 @@ class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = UserCandidate.objects.all()
     lookup_field = 'id'
 
+
 class StatusesInFilterBackend(BaseFilterBackend):
     # statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
 
@@ -366,15 +367,23 @@ class CandidateFilter(django_filters.FilterSet):
 class CandidateAPIViewFilter(ListCreateAPIView):
     serializer_class = CandidateSerializer
     queryset = Candidate.objects.all()
+    pagination_class = PaginationBaseClass
     filterset_class = CandidateFilter
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        StatusesInFilterBackend
+    ]
+    # filter_fields = {
+    #     'status': ["in", "exact"]  # icontains ,exact, gte, lte, in
+    #     # if you want to add more fields, you can
+    # }
     search_fields = [
         'last_name',
         'first_name',
         'middle_name',
         'post',
-        'status',
+        # 'status',
         'create_date',
         'mobile_phone'
     ]
@@ -385,7 +394,11 @@ class CandidateAPIView(ListCreateAPIView):
     queryset = Candidate.objects.all()
     pagination_class = PaginationBaseClass
     filterset_class = CandidateFilter
-    filter_backends = [SearchFilter, DjangoFilterBackend, StatusesInFilterBackend]
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        # StatusesInFilterBackend
+    ]
     # filter_fields = {
     #     'status': ["in", "exact"]  # icontains ,exact, gte, lte, in
     #     # if you want to add more fields, you can

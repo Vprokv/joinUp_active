@@ -31,3 +31,4 @@ djangorestframework-simplejwt==4.8.0
 pyjwt==2.3.0
 django-rest-sms-auth==0.1.22
 celery==5.0
+redis==3.2.0

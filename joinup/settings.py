@@ -190,8 +190,8 @@ SMS_AUTH_SETTINGS = {
     "SMS_AUTH_PROVIDER_FROM": "ex: +7542222222",  # sms signature
 
     # If another provider
-    "SMS_AUTH_PROVIDER_LOGIN": "SMS provider login",
-    "SMS_AUTH_PROVIDER_PASSWORD": "SMS provider password"
+    "SMS_AUTH_PROVIDER_LOGIN": "prokopchuk_veron@mail.ru",
+    "SMS_AUTH_PROVIDER_PASSWORD": "lise1710"
 }
 
 BROKER_URL = 'redis://dockerRedis@redis:6379/0'
