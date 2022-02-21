@@ -318,6 +318,9 @@ class StatusesInFilterBackend(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
         statuses = request.query_params.get('statuses')
+        if request is None:
+            return
+
         if statuses:
             statuses = statuses.split(",")
             return queryset.filter(status__in=statuses)
@@ -341,9 +344,9 @@ class StatusesInFilterBackend(BaseFilterBackend):
         ]
 
 class CandidateFilter(django_filters.FilterSet):
-    start_before = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="lte")
-    start_after = django_filters.DateTimeFilter(field_name="create_date", lookup_expr="gte")
-    statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
+    start_before = django_filters.DateTimeFilter(field_name="release_date", lookup_expr="lte")
+    start_after = django_filters.DateTimeFilter(field_name="release_date", lookup_expr="gte")
+    # statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
 
     class Meta:
         model = Candidate
@@ -359,6 +362,7 @@ class CandidateFilter(django_filters.FilterSet):
             'start_after',
             'create_date',
             'mobile_phone',
+            'release_date',
             # 'illustration'
         ]
 
