@@ -75,7 +75,8 @@ class Goal(models.Model):
 class Document(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
-    document_link = models.CharField(max_length=256, verbose_name="Ccылка на файл", null=True, blank=True)
+    json = models.JSONField(null=True)
+    # document_link = models.CharField(max_length=256, verbose_name="Ccылка на файл", null=True, blank=True)
     tier = models.IntegerField(verbose_name="Номер по порядку")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")

@@ -101,7 +101,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, db_index=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('document_name', models.CharField(max_length=128, verbose_name='Наименование документа')),
-                ('document_link', models.CharField(blank=True, max_length=256, null=True, verbose_name='Ccылка на файл')),
+                ('json', models.JSONField(null=True)),
                 ('tier', models.IntegerField(verbose_name='Номер по порядку')),
                 ('create_date', models.DateTimeField(verbose_name='Дата создания')),
                 ('id_employee', models.IntegerField(verbose_name='Сотрудник создавший запись')),
