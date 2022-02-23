@@ -161,7 +161,6 @@ class GoalSerializer(serializers.ModelSerializer):
 
 class DocumentSerializer(serializers.ModelSerializer):
     document_name = serializers.CharField(required=False)
-    document_link = serializers.CharField(required=False)
     tier = serializers.IntegerField(required=False)
     create_date = serializers.DateTimeField()
     id_employee = serializers.IntegerField(required=False)
