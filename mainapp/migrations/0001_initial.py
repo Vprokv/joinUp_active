@@ -200,22 +200,22 @@ class Migration(migrations.Migration):
                 ('status', models.IntegerField(verbose_name='Статус кандидата')),
             ],
         ),
-        migrations.CreateModel(
-            name='UserCandidate',
-            fields=[
-                ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='auth.user')),
-                ('isCandidate', models.BooleanField(default=False)),
-            ],
-            options={
-                'verbose_name': 'user',
-                'verbose_name_plural': 'users',
-                'abstract': False,
-            },
-            bases=('auth.user',),
-            managers=[
-                ('objects', django.contrib.auth.models.UserManager()),
-            ],
-        ),
+        # migrations.CreateModel(
+        #     name='UserCandidate',
+        #     fields=[
+        #         ('user_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='auth.user')),
+        #         ('isCandidate', models.BooleanField(default=False)),
+        #     ],
+        #     options={
+        #         'verbose_name': 'user',
+        #         'verbose_name_plural': 'users',
+        #         'abstract': False,
+        #     },
+        #     bases=('auth.user',),
+        #     managers=[
+        #         ('objects', django.contrib.auth.models.UserManager()),
+        #     ],
+        # ),
         migrations.CreateModel(
             name='Block',
             fields=[
@@ -251,11 +251,11 @@ class Migration(migrations.Migration):
                 ('candidate', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='comment', to='mainapp.candidate', verbose_name='Кандидат')),
             ],
         ),
-        migrations.AddField(
-            model_name='candidate',
-            name='candidate',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='candidates', to='mainapp.usercandidate', verbose_name='Кандидат'),
-        ),
+        # migrations.AddField(
+        #     model_name='candidate',
+        #     name='candidate',
+        #     field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='candidates', to='mainapp.usercandidate', verbose_name='Кандидат'),
+        # ),
         migrations.AddField(
             model_name='candidate',
             name='program',

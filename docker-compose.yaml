@@ -14,7 +14,7 @@ services:
     command: -p 5430
   web:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:9000"
+    command: bash -c "python manage.py makemigrations sms_auth && python manage.py migrate && python manage.py runserver 0.0.0.0:9000"
     restart: always
     volumes:
       - .:/code
@@ -30,9 +30,9 @@ services:
       - postgres:postgres
     depends_on:
       - postgres
+      - redis
     networks:
       - api-server-network
-
   nginx:
     image: nginx:1.21.5-alpine
     restart: always
@@ -55,12 +55,26 @@ services:
       - "6379:6379"
     volumes:
       - ../.database/redis/data:/var/lib/redis/data
+    command: redis-server
     networks:
       - api-server-network
+    depends_on:
+      - postgres
     container_name: redis
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=dockerRedis
+  celery:
+    build: .
+    command: celery -A run_celery worker -l INFO
+    volumes:
+      - .:/code
+    links:
+      - redis
+    depends_on:
+      - web
+      - redis
+      - postgres
 
 networks:
   api-server-network:
