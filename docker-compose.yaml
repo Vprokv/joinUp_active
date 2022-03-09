@@ -30,7 +30,7 @@ services:
       - postgres:postgres
     depends_on:
       - postgres
-      - redis
+      - redis-celery
     networks:
       - api-server-network
   nginx:
@@ -49,31 +49,20 @@ services:
       - api-server-network
     depends_on:
       - web
-  redis:
-    image: "bitnami/redis:5.0.14"
-    ports:
-      - "6379:6379"
+  redis-celery:
+    image: "redis:alpine"
+    command: "--requirepass dockerRedis"
     volumes:
       - ../.database/redis/data:/var/lib/redis/data
-    command: redis-server
-    networks:
-      - api-server-network
-    depends_on:
-      - postgres
-    container_name: redis
     restart: unless-stopped
-    environment:
-      - REDIS_PASSWORD=dockerRedis
   celery:
     build: .
     command: celery -A run_celery worker -l INFO
     volumes:
       - .:/code
-    links:
-      - redis
     depends_on:
       - web
-      - redis
+      - redis-celery
       - postgres
 
 networks:

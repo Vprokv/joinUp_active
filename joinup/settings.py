@@ -199,8 +199,8 @@ SMS_AUTH_SETTINGS = {
 # BROKER_URL = 'redis://admin:dockerRedis@redis:6379/0'
 # CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 
-CELERY_BROKER_URL = 'redis://admin:dockerRedis@redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://admin:dockerRedis@redis:6379/0'
+CELERY_BROKER_URL = 'redis://:dockerRedis@redis-celery:6379/0'
+CELERY_RESULT_BACKEND = 'redis://:dockerRedis@redis-celery:6379'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
