@@ -143,13 +143,13 @@ class Candidate(models.Model):
     release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)
     illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
-    candidate = models.ForeignKey(
-        UserCandidate,
-        verbose_name="Кандидат",
-        on_delete=models.SET_NULL,
-        related_name='candidates',
-        null=True
-    )
+    # candidate = models.ForeignKey(
+    #     UserCandidate,
+    #     verbose_name="Кандидат",
+    #     on_delete=models.SET_NULL,
+    #     related_name='candidates',
+    #     null=True
+    # )
     program = models.ManyToManyField(Program, verbose_name="Программа")
 
     def __str__(self):

@@ -84,6 +84,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mainapp.middleware.auth_middleware'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
@@ -199,10 +200,14 @@ SMS_AUTH_SETTINGS = {
 # BROKER_URL = 'redis://admin:dockerRedis@redis:6379/0'
 # CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 
-CELERY_BROKER_URL = 'redis://:dockerRedis@redis-celery:6379/0'
+CELERY_BROKER_URL = 'redis://:dockerRedis@redis-celery:6379'
 CELERY_RESULT_BACKEND = 'redis://:dockerRedis@redis-celery:6379'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_STORE_ERRORS_EVEN_IF_IGNORED = True
+
+REDIS_HOST = 'redis-celery'
+REDIS_PORT = 6379
+REDIS_PASSWORD = 'dockerRedis'

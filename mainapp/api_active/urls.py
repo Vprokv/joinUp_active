@@ -43,7 +43,7 @@ from .api_views import (
     JobDirectoryAPIView,
     JobDirectoryDetailAPIView,
     CommentToStageAPIView,
-    FileView
+    FileView,
     # upload
 )
 

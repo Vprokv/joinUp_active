@@ -17,14 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from .yasg import urlpatterns as doc_urls
 
+
 from django.conf.urls.static import static
 from django.conf import settings
 # from mainapp.api_active.api_views import upload
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/', include('mainapp.api.urls')),
     path('api-active/', include('mainapp.api_active.urls')),
+    path('auth/', include('mainapp.auth.urls')),
 
     # path('api-auth/', include('rest_framework.urls'))
 ]
