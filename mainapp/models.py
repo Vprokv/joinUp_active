@@ -17,11 +17,12 @@ class Employee(models.Model):
     middle_name = models.CharField(max_length=64, verbose_name="Отчество")
     post = models.CharField(max_length=64, verbose_name="Должность")
     mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
-    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
+    email = models.CharField(max_length=64, unique=True, verbose_name="Адрес электронной почты")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
+    password = models.CharField(max_length=256, verbose_name="Пароль")
 
     def __str__(self):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)
