@@ -7,6 +7,7 @@ import os
 from random import randint
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import requests
 from django.conf import settings
 
 redis_instance = redis.StrictRedis(
@@ -54,13 +55,19 @@ class CandidateAuth(APIView):
         if redis_instance.ttl(phone) > 240:
             return Response("SMS уже в пути, попробуйте запросить повторную SMS через минуту", status=400)
 
-        candidate = Candidate.objects.get(mobile_phone = phone)
-        code = str(randint(10**5, (10**6)-1))
+        code = str(randint(10 ** 5, (10 ** 6) - 1))
 
-        print("https://prokopchuk_veron@mail.ru:4YouuhbmytB4jLRUI2GufyAH3gRf@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS Aero".format(
-            phone = phone,
-            text = 'JoinUs код авторизации {code}'.format(code = code)
-        ))
+        api_response = requests.get(
+            "https://prokopchuk_veron@mail.ru:4YouuhbmytB4jLRUI2GufyAH3gRf@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS".format(
+                phone=phone,
+                text='JoinUs код авторизации {code}'.format(code=code)
+            ))
+
+        if api_response.status_code != 200:
+            return Response("Невозможно доставить код авторизации", status=500)
+
+        candidate = Candidate.objects.get(mobile_phone = phone)
+
 
         encoded_jwt = jwt.encode({"candidate_id": candidate.id}, jwt_secret, algorithm="HS256")
 
