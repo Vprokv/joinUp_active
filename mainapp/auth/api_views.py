@@ -55,6 +55,8 @@ class CandidateAuth(APIView):
         if redis_instance.ttl(phone) > 240:
             return Response("SMS уже в пути, попробуйте запросить повторную SMS через минуту", status=400)
 
+        candidate = Candidate.objects.get(mobile_phone=phone)
+
         code = str(randint(10 ** 5, (10 ** 6) - 1))
 
         api_response = requests.get(
@@ -65,9 +67,6 @@ class CandidateAuth(APIView):
 
         if api_response.status_code != 200:
             return Response("Невозможно доставить код авторизации", status=500)
-
-        candidate = Candidate.objects.get(mobile_phone = phone)
-
 
         encoded_jwt = jwt.encode({"candidate_id": candidate.id}, jwt_secret, algorithm="HS256")
 
