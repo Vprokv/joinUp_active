@@ -31,7 +31,7 @@ class EmployeeAuth(APIView):
         body = json.loads(request.body.decode('utf-8'))
         email = body.get("email")
         password = body.get("password")
-        employee = Employee.objects.get(email=email)
+        employee = Employee.objects.get(email=email, password=password)
         encoded_jwt = jwt.encode({"employee_id": employee.id}, jwt_secret, algorithm="HS256")
 
         return Response(encoded_jwt, status=200)

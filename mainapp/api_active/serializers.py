@@ -12,7 +12,6 @@ from ..models import (
     LicensePack,
     Customer,
     License,
-    UserCandidate,
     Candidate,
     AdaptationStatus,
     Award,
@@ -356,18 +355,6 @@ class CandidateSerializerList(serializers.ModelSerializer):
 
     class Meta:
         model = Candidate
-        fields = '__all__'
-
-
-class UserCandidateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserCandidate
-        fields = '__all__'
-
-
-class UserCandidateDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserCandidate
         fields = '__all__'
 
 

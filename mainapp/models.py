@@ -1,12 +1,5 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.contrib.auth.models import User, UserManager
-
-
-class UserCandidate(User):
-    isCandidate = models.BooleanField(default=False)
-
-    objects = UserManager()
 
 
 class Employee(models.Model):
@@ -144,13 +137,6 @@ class Candidate(models.Model):
     release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)
     illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
-    # candidate = models.ForeignKey(
-    #     UserCandidate,
-    #     verbose_name="Кандидат",
-    #     on_delete=models.SET_NULL,
-    #     related_name='candidates',
-    #     null=True
-    # )
     program = models.ManyToManyField(Program, verbose_name="Программа")
 
     def __str__(self):
@@ -181,13 +167,6 @@ class AdaptationStage(models.Model):
 
 
 class Block(models.Model):
-    # id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    # block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
-    # description = models.CharField(max_length=256, verbose_name="Cодержание блока")
-    # tier = models.IntegerField(verbose_name="Номер по порядку")
-    # status = models.IntegerField(verbose_name="Статус блока")
-    # create_date = models.DateTimeField(verbose_name="Дата создания")
-    # id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     adaptationStage = models.OneToOneField(
         AdaptationStage,
         verbose_name="Этап",
