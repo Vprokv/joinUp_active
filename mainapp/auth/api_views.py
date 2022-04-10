@@ -24,6 +24,8 @@ from ..models import (
 )
 
 jwt_secret = os.environ['JWT_SECRET']
+login_provider = os.environ['LOGIN_PROVIDER']
+key_provider = os.environ['KEY_PROVIDER']
 
 
 class EmployeeAuth(APIView):
@@ -35,6 +37,7 @@ class EmployeeAuth(APIView):
         encoded_jwt = jwt.encode({"employee_id": employee.id}, jwt_secret, algorithm="HS256")
 
         return Response(encoded_jwt, status=200)
+
 
 class CandidateAuth(APIView):
     def post(self, request, *args, **kwargs):
@@ -60,7 +63,9 @@ class CandidateAuth(APIView):
         code = str(randint(10 ** 5, (10 ** 6) - 1))
 
         api_response = requests.get(
-            "https://prokopchuk_veron@mail.ru:4YouuhbmytB4jLRUI2GufyAH3gRf@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS".format(
+            "https://{login}:{key}@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS".format(
+                login=login_provider,
+                key=key_provider,
                 phone=phone,
                 text='JoinUs код авторизации {code}'.format(code=code)
             ))
@@ -75,3 +80,18 @@ class CandidateAuth(APIView):
         redis_instance.expire(phone, 300)
 
         return Response(status=200)
+
+    def me(self, request, *args, **kwargs):
+        body = json.loads(request.body.decode('utf-8'))
+        phone = body.get("phone")
+        candidate = Candidate.objects.get(mobile_phone=phone)
+
+        return Response(candidate, status=200)
+
+class CandidateMe(APIView):
+    def post(self, request, *args, **kwargs):
+        body = json.loads(request.body.decode('utf-8'))
+        phone = body.get("phone")
+        candidate = Candidate.objects.get(mobile_phone=phone)
+
+        return Response(candidate, status=200)
