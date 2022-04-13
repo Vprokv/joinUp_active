@@ -138,6 +138,7 @@ GitHub.sublime-settings
 
 #docker volumes
 /.database
+/logs_nginx
 
 #env
 web.env
