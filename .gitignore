@@ -137,7 +137,7 @@ GitHub.sublime-settings
 .history
 
 #docker volumes
-/database
+/.database
 /logs_nginx
 
 #env
