@@ -3,6 +3,8 @@ services:
   postgres:
     image: postgres:12
     restart: always
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
     networks:
       - api-server-network
     ports:
@@ -46,7 +48,7 @@ services:
       - ./conf:/etc/nginx
       - ../files:/files
       - ../JoinUs/build:/front
-      - ../logs_nginx:/var/log/nginx
+      - ./logs_nginx:/var/log/nginx
     networks:
       - api-server-network
     depends_on:
