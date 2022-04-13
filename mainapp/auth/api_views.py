@@ -7,8 +7,10 @@ import os
 from random import randint
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.core import serializers
 import requests
 from django.conf import settings
+from django.http import HttpResponse, JsonResponse
 
 redis_instance = redis.StrictRedis(
     host=settings.REDIS_HOST,
@@ -61,9 +63,8 @@ class CandidateAuth(APIView):
         candidate = Candidate.objects.get(mobile_phone=phone)
 
         code = str(randint(10 ** 5, (10 ** 6) - 1))
-
         api_response = requests.get(
-            "https://{login}:{key}@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS".format(
+            "https://{login}:{key}@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS Aero".format(
                 login=login_provider,
                 key=key_provider,
                 phone=phone,
@@ -81,12 +82,6 @@ class CandidateAuth(APIView):
 
         return Response(status=200)
 
-    def me(self, request, *args, **kwargs):
-        body = json.loads(request.body.decode('utf-8'))
-        phone = body.get("phone")
-        candidate = Candidate.objects.get(mobile_phone=phone)
-
-        return Response(candidate, status=200)
 
 class CandidateMe(APIView):
     def post(self, request, *args, **kwargs):
@@ -94,4 +89,11 @@ class CandidateMe(APIView):
         phone = body.get("phone")
         candidate = Candidate.objects.get(mobile_phone=phone)
 
-        return Response(candidate, status=200)
+        return Response({
+            'last_name': candidate.last_name,
+            'first_name': candidate.first_name,
+            'middle_name': candidate.middle_name,
+            'mobile_phone': candidate.mobile_phone,
+            'email': candidate.email,
+            'candidateId': candidate.id
+        }, status=200)

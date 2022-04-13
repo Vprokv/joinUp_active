@@ -1,5 +1,5 @@
 import django_filters
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.filters import SearchFilter, BaseFilterBackend
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.pagination import PageNumberPagination
@@ -32,7 +32,8 @@ from .serializers import (
     CandidateSerializerDetail,
     JobDirectorySerializer,
     CommentToStageSerializer,
-    FileSerializer
+    FileSerializer,
+    EmployeeCreateSerializer
 )
 from ..models import (
     Program,
@@ -84,11 +85,25 @@ class AdaptationProgramDetailAPIView(RetrieveUpdateDestroyAPIView):
 
 
 # search
-class EmployeeAPIView(ListCreateAPIView):
+class EmployeeListAPIView(ListAPIView):
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
     filter_backends = [SearchFilter]
     # permission_classes = [IsAuthenticated]
+    search_fields = [
+        'last_name',
+        'first_name',
+        'middle_name',
+        'post',
+        'status',
+        'create_date'
+    ]
+
+
+class EmployeeCreateAPIView(CreateAPIView):
+    serializer_class = EmployeeCreateSerializer
+    queryset = Employee.objects.all()
+    filter_backends = [SearchFilter]
     search_fields = [
         'last_name',
         'first_name',
@@ -315,6 +330,7 @@ class StatusesInFilterBackend(BaseFilterBackend):
             'create_date',
             'mobile_phone'
         ]
+
 
 class CandidateFilter(django_filters.FilterSet):
     start_before = django_filters.DateTimeFilter(field_name="release_date", lookup_expr="lte")

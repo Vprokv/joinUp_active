@@ -224,6 +224,24 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
+        exclude = ('password',)
+
+class EmployeeCreateSerializer(serializers.ModelSerializer):
+    id_customer = serializers.IntegerField()
+    last_name = serializers.CharField()
+    first_name = serializers.CharField()
+    middle_name = serializers.CharField(required=False)
+    post = serializers.CharField(required=False)
+    mobile_phone = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    status = serializers.IntegerField(required=False)
+    create_date = serializers.DateTimeField(required=False)
+    id_employee = serializers.IntegerField(required=False)
+    illustration = serializers.CharField(required=False)
+    password = serializers.CharField(required=True)
+
+    class Meta:
+        model = Employee
         fields = '__all__'
 
 
@@ -242,7 +260,7 @@ class EmployeeSerializerDetail(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        exclude = ('password',)
+        fields = '__all__'
 
 
 class EmployeeSerializerList(serializers.ModelSerializer):

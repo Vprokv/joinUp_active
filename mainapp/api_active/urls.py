@@ -4,7 +4,7 @@ from .api_views import (
     AdaptationProgramAPIView,
     AdaptationProgramDetailAPIView,
 
-    EmployeeAPIView,
+    EmployeeListAPIView,
     EmployeeDetailAPIView,
 
     AdaptationStageAPIView,
@@ -35,6 +35,7 @@ from .api_views import (
     JobDirectoryAPIView,
     JobDirectoryDetailAPIView,
     CommentToStageAPIView,
+    EmployeeCreateAPIView,
     FileView
 )
 
@@ -45,7 +46,8 @@ urlpatterns = [
     path('candidate/filter/', CandidateAPIViewFilter.as_view(), name='employee filter for date and any params'),
     path('candidate/<str:id>/', CandidateDetailAPIView.as_view(), name='candidate employee detail'),
 
-    path('employee/', EmployeeAPIView.as_view(), name='employee'),
+    path('employee/list/', EmployeeListAPIView.as_view(), name='employee list'),
+    path('employee/create/', EmployeeCreateAPIView.as_view(), name='employee'),
     path('employee/<str:id>/', EmployeeDetailAPIView.as_view(), name='employee detail'),
 
     path('adaptationprogram/', AdaptationProgramAPIView.as_view(), name='adaptation program'),
