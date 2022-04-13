@@ -12,7 +12,6 @@ from ..models import (
     LicensePack,
     Customer,
     License,
-    UserCandidate,
     Candidate,
     AdaptationStatus,
     Award,
@@ -139,7 +138,6 @@ class ProgramSerializer(serializers.ModelSerializer):
     create_date = serializers.DateTimeField(required=False)
     tier = serializers.IntegerField(required=False)
     description = serializers.CharField(required=False)
-    # illustration = serializers.CharField(required=False)
 
     class Meta:
         model = Program
@@ -244,7 +242,7 @@ class EmployeeSerializerDetail(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = '__all__'
+        exclude = ('password',)
 
 
 class EmployeeSerializerList(serializers.ModelSerializer):
@@ -356,18 +354,6 @@ class CandidateSerializerList(serializers.ModelSerializer):
 
     class Meta:
         model = Candidate
-        fields = '__all__'
-
-
-class UserCandidateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserCandidate
-        fields = '__all__'
-
-
-class UserCandidateDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserCandidate
         fields = '__all__'
 
 

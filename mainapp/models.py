@@ -1,12 +1,5 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.contrib.auth.models import User, UserManager
-
-
-class UserCandidate(User):
-    isCandidate = models.BooleanField(default=False)
-
-    objects = UserManager()
 
 
 class Employee(models.Model):
@@ -17,11 +10,17 @@ class Employee(models.Model):
     middle_name = models.CharField(max_length=64, verbose_name="Отчество")
     post = models.CharField(max_length=64, verbose_name="Должность")
     mobile_phone = models.CharField(max_length=64, verbose_name="Телефон")
-    email = models.CharField(max_length=64, verbose_name="Адрес электронной почты")
+    email = models.CharField(max_length=64, unique=True, verbose_name="Адрес электронной почты")
     status = models.IntegerField(verbose_name="Статус записи")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
+    password = models.CharField(max_length=256, verbose_name="Пароль")
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['email', 'password']),
+        ]
 
     def __str__(self):
         return "Сотрудник: {} {}".format(self.last_name, self.first_name)
@@ -38,7 +37,8 @@ class Contact(models.Model):
     role = models.CharField(max_length=64, verbose_name="Роль")
     tier = models.IntegerField(verbose_name="Номер по порядку")
     status = models.IntegerField(verbose_name="Статус контакта")
-    illustration_link = models.CharField(max_length=256, verbose_name="Ccсылка на иллюстрацию(аватарку)", null=True, blank=True)
+    illustration_link = models.CharField(max_length=256, verbose_name="Ccсылка на иллюстрацию(аватарку)", null=True,
+                                         blank=True)
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
 
@@ -76,7 +76,6 @@ class Document(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
     document_name = models.CharField(max_length=128, verbose_name="Наименование документа")
     json = models.JSONField(null=True)
-    # document_link = models.CharField(max_length=256, verbose_name="Ccылка на файл", null=True, blank=True)
     tier = models.IntegerField(verbose_name="Номер по порядку")
     create_date = models.DateTimeField(verbose_name="Дата создания")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
@@ -119,7 +118,7 @@ class Program(models.Model):
         null=True
     )
     contact = models.ManyToManyField(Contact, verbose_name="Контакты", blank=True)
-    customer = models.ManyToManyField(Customer, verbose_name="Заказчик",  blank=True)
+    customer = models.ManyToManyField(Customer, verbose_name="Заказчик", blank=True)
     levels = models.ManyToManyField(Level, verbose_name="Уровни", blank=True)
     documents = models.ManyToManyField(Document, verbose_name="Документы", blank=True)
     goals = models.ManyToManyField(Goal, verbose_name="Цели", blank=True)
@@ -143,14 +142,12 @@ class Candidate(models.Model):
     release_date = models.DateField(verbose_name="Дата выходa")
     id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись", null=True)
     illustration = models.CharField(max_length=256, verbose_name="Иллюстрация", null=True, blank=True)
-    # candidate = models.ForeignKey(
-    #     UserCandidate,
-    #     verbose_name="Кандидат",
-    #     on_delete=models.SET_NULL,
-    #     related_name='candidates',
-    #     null=True
-    # )
     program = models.ManyToManyField(Program, verbose_name="Программа")
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['mobile_phone']),
+        ]
 
     def __str__(self):
         return "Кандидат: {} {}".format(self.last_name, self.first_name)
@@ -180,13 +177,6 @@ class AdaptationStage(models.Model):
 
 
 class Block(models.Model):
-    # id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_index=True)
-    # block_name = models.CharField(max_length=128, verbose_name="Наименование блока")
-    # description = models.CharField(max_length=256, verbose_name="Cодержание блока")
-    # tier = models.IntegerField(verbose_name="Номер по порядку")
-    # status = models.IntegerField(verbose_name="Статус блока")
-    # create_date = models.DateTimeField(verbose_name="Дата создания")
-    # id_employee = models.IntegerField(verbose_name="Сотрудник создавший запись")
     adaptationStage = models.OneToOneField(
         AdaptationStage,
         verbose_name="Этап",

@@ -22,7 +22,6 @@ from .serializers import (
     CustomerSerializer,
     LicensePackSerializer,
     LicenseSerializer,
-    UserCandidateSerializer,
     CandidateSerializer,
     AdaptationStatusSerializer,
     AwardSerializer,
@@ -31,7 +30,6 @@ from .serializers import (
     EmployeeSerializerDetail,
     ICandidateSerializer,
     CandidateSerializerDetail,
-    UserCandidateDetailSerializer,
     JobDirectorySerializer,
     CommentToStageSerializer,
     FileSerializer
@@ -48,7 +46,6 @@ from ..models import (
     LicensePack,
     Customer,
     License,
-    UserCandidate,
     Candidate,
     AdaptationStatus,
     Award,
@@ -153,15 +150,6 @@ class BlockPIView(ListCreateAPIView):
     serializer_class = BlockSerializer
     queryset = Block.objects.all()
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    # search_fields = [
-    #     'status',
-    #     'id_stage',
-    #     'create_date'
-    # ]
-    # filter_fields = [
-    #     'status',
-    #     'create_date'
-    # ]
 
 
 class BlockDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -301,20 +289,7 @@ class LicenseDetailAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
-class UserCandidateAPIView(ListCreateAPIView):
-    serializer_class = UserCandidateSerializer
-    queryset = UserCandidate.objects.all()
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-
-
-class UserCandidateDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserCandidateDetailSerializer
-    queryset = UserCandidate.objects.all()
-    lookup_field = 'id'
-
-
 class StatusesInFilterBackend(BaseFilterBackend):
-    # statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
 
     def filter_queryset(self, request, queryset, view):
         statuses = request.query_params.get('statuses')
@@ -335,18 +310,15 @@ class StatusesInFilterBackend(BaseFilterBackend):
             'middle_name',
             'post',
             'status',
-            # 'statuses',
             'start_before',
             'start_after',
             'create_date',
-            'mobile_phone',
-            # 'illustration'
+            'mobile_phone'
         ]
 
 class CandidateFilter(django_filters.FilterSet):
     start_before = django_filters.DateTimeFilter(field_name="release_date", lookup_expr="lte")
     start_after = django_filters.DateTimeFilter(field_name="release_date", lookup_expr="gte")
-    # statuses = django_filters.NumericRangeFilter(field_name="status", lookup_expr='gt')
 
     class Meta:
         model = Candidate
@@ -357,13 +329,11 @@ class CandidateFilter(django_filters.FilterSet):
             'middle_name',
             'post',
             'status',
-            # 'statuses',
             'start_before',
             'start_after',
             'create_date',
             'mobile_phone',
-            'release_date',
-            # 'illustration'
+            'release_date'
         ]
 
 
@@ -378,16 +348,12 @@ class CandidateAPIViewFilter(ListCreateAPIView):
         DjangoFilterBackend,
         StatusesInFilterBackend
     ]
-    # filter_fields = {
-    #     'status': ["in", "exact"]  # icontains ,exact, gte, lte, in
-    #     # if you want to add more fields, you can
-    # }
+
     search_fields = [
         'last_name',
         'first_name',
         'middle_name',
         'post',
-        # 'status',
         'create_date',
         'mobile_phone'
     ]
@@ -400,19 +366,14 @@ class CandidateAPIView(ListCreateAPIView):
     filterset_class = CandidateFilter
     filter_backends = [
         SearchFilter,
-        DjangoFilterBackend,
-        # StatusesInFilterBackend
+        DjangoFilterBackend
     ]
-    # filter_fields = {
-    #     'status': ["in", "exact"]  # icontains ,exact, gte, lte, in
-    #     # if you want to add more fields, you can
-    # }
+
     search_fields = [
         'last_name',
         'first_name',
         'middle_name',
         'post',
-        # 'status',
         'create_date',
         'mobile_phone'
     ]
@@ -476,14 +437,6 @@ class JobDirectoryDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = JobDirectorySerializer
     queryset = JobDirectoryCatalogs.objects.all()
     lookup_field = 'id'
-
-
-# def upload(request):
-#     if request.method == 'POST':
-#         uploaded_file = request.FILES['document']
-#         fs = FileSystemStorage()
-#         fs.save(uploaded_file.name, uploaded_file)
-#         return request.name
 
 
 class FileView(APIView):

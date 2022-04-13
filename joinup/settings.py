@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5@#stj*s5vv+-e9nsqh#hg%8r6k!y*zj+6phu++s)=ng5c_4%9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -42,10 +42,6 @@ INSTALLED_APPS = [
     'mainapp',
     'django_filters',
     'djoser',
-    # 'rest_framework_jwt',
-    'rest_framework_simplejwt',
-    'sms_auth',
-    'celery',
     'phonenumber_field'
 ]
 
@@ -58,15 +54,8 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.JSONParser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
-
-    ],
-    # 'DEFAULT_RENDERER_CLASSES': [
-    #     'rest_framework.renderers.JSONRenderer',
-    # ],
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
 }
 
 JWT_AUTH = {
@@ -88,21 +77,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
-# CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3030',
 ]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
-# CORS_ALLOWED_ORIGIN_REGEXES = [
-#     'http://localhost:3030',
-# ]
-
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000',
-#     'http://localhost:9000',
-#     'http://127.0.0.1:3000',
-#     'http://127.0.0.1:9000',
-#     'http://0.0.0.0:9000',
-# ]
 
 ROOT_URLCONF = 'joinup.urls'
 
@@ -124,37 +102,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'joinup.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'test',
+        'NAME': os.environ['NAME_DB'],
+        'USER': os.environ['USER_DB'],
+        'PASSWORD': os.environ['PASSWORD_DB'],
         'HOST': 'postgres',
         'PORT': '5430',
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -185,20 +152,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-SMS_AUTH_SETTINGS = {
-    "SMS_CELERY_FILE_NAME": "run_celery",  # your system celery file,
-    "SMS_AUTH_SUCCESS_KEY": "jwt_token",  # property from user model
-    "SMS_AUTH_PROVIDER_FROM": "ex: +7542222222",  # sms signature
-
-    # If another provider
-    "SMS_AUTH_PROVIDER_LOGIN": "prokopchuk_veron@mail.ru",
-    "SMS_AUTH_PROVIDER_PASSWORD": "lise1710"
-}
-
-
-# BROKER_URL = 'redis://admin:dockerRedis@redis:6379/0'
-# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 
 CELERY_BROKER_URL = 'redis://:dockerRedis@redis-celery:6379'
 CELERY_RESULT_BACKEND = 'redis://:dockerRedis@redis-celery:6379'
