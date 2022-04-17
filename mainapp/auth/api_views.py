@@ -64,9 +64,9 @@ class CandidateAuth(APIView):
 
         code = str(randint(10 ** 5, (10 ** 6) - 1))
         api_response = requests.get(
-            "https://{login}:{key}@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS Aero".format(
-                login=login_provider,
-                key=key_provider,
+            "https://JoinUsProject@yandex.ru:sui4aIYDRrZTkd63f3E29hbPhEHi@gate.smsaero.ru/v2/sms/send?number={phone}&text={text}&sign=SMS Aero".format(
+                # login=login_provider,
+                # key=key_provider,
                 phone=phone,
                 text='JoinUs код авторизации {code}'.format(code=code)
             ))
